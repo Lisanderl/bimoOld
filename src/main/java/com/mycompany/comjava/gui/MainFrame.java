@@ -27,11 +27,15 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import jssc.SerialPort;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  *
  * @author oleg
  */
+@Getter
+@Setter
 public class MainFrame extends JFrame {
 
     private JLabel configL, speedL, bitsL, stopBitsL;
@@ -193,95 +197,6 @@ public class MainFrame extends JFrame {
 //</editor-fold>
     }
 
-//<editor-fold defaultstate="collapsed" desc="get_set">
-    public JCheckBox getAdc() {
-        return adc;
-    }
-
-    public JButton getClearLog() {
-        return clearLog;
-    }
-
-    public SerialPortModel getModel() {
-        return model;
-    }
-
-    public JPanel getMainPanel() {
-        return mainPanel;
-    }
-
-    public JLabel getStopBitsL() {
-        return stopBitsL;
-    }
-
-    public JButton getStop() {
-        return stop;
-    }
-
-    public JButton getStraight() {
-        return straight;
-    }
-
-    public JButton getBack() {
-        return back;
-    }
-
-    public JButton getLeft() {
-        return left;
-    }
-
-    public JButton getRight() {
-        return right;
-    }
-
-    public JButton getTest() {
-        return test;
-    }
-
-    public JButton getRefresh() {
-        return refresh;
-    }
-
-    public JTextArea getLog() {
-        return log;
-    }
-
-
-    public JComboBox<String> getCOMPort() {
-        return COMPort;
-    }
-
-    public JComboBox<Integer> getPortSpeed() {
-        return portSpeed;
-    }
-
-    public JComboBox<Integer> getBits() {
-        return bits;
-    }
-
-    public JComboBox<Integer> getStopBits() {
-        return stopBits;
-    }
-
-    public JComboBox<Integer> getParity() {
-        return parity;
-    }
-
-    public JTextField getSolarVoltage() {
-        return solarVoltage;
-    }
-
-    public JTextField getBattaryVoltage() {
-        return battaryVoltage;
-    }
-
-    public JCheckBox getLed() {
-        return led;
-    }
-
-    public JButton getLedPlus() {
-        return ledPlus;
-    }
 
 //</editor-fold>
 }

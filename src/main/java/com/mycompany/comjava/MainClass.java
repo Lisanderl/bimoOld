@@ -11,9 +11,8 @@ public class MainClass {
         for (i = 0; i !=10; i++) {
             System.out.println(i);
         }
-      
-     MainFrame s = new MainFrame();
-       Controller c = new Controller(s);
+
+       new Controller(new MainFrame());
        
         
     }

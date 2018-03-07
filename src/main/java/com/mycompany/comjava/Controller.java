@@ -6,6 +6,9 @@
 package com.mycompany.comjava;
 
 import com.mycompany.comjava.gui.MainFrame;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -38,19 +41,19 @@ public class Controller {
 
     private void addListners() {
 
-        view.getAdc().addItemListener(new AdcBoxListner());
+        view.getAdc().addItemListener(new AdcBoxListener());
 
-        view.getLed().addItemListener(new LedBoxListner());
+        view.getLed().addItemListener(new LedBoxListener());
 
-        view.getStraight().addActionListener(new ControlButtonListner(view.getStraight()));
-        view.getBack().addActionListener(new ControlButtonListner(view.getBack()));
-        view.getLeft().addActionListener(new ControlButtonListner(view.getLeft()));
-        view.getRight().addActionListener(new ControlButtonListner(view.getRight()));
-        view.getStop().addActionListener(new ControlButtonListner(view.getStop()));
-        view.getRefresh().addActionListener(new ControlButtonListner(view.getRefresh()));
-        view.getClearLog().addActionListener(new ControlButtonListner(view.getClearLog()));
-        view.getLedPlus().addActionListener(new ControlButtonListner(view.getLedPlus()));
-        view.getTest().addKeyListener(new ActionKeysListner());
+        view.getStraight().addActionListener(new ControlButtonListener(view.getStraight()));
+        view.getBack().addActionListener(new ControlButtonListener(view.getBack()));
+        view.getLeft().addActionListener(new ControlButtonListener(view.getLeft()));
+        view.getRight().addActionListener(new ControlButtonListener(view.getRight()));
+        view.getStop().addActionListener(new ControlButtonListener(view.getStop()));
+        view.getRefresh().addActionListener(new ControlButtonListener(view.getRefresh()));
+        view.getClearLog().addActionListener(new ControlButtonListener(view.getClearLog()));
+        view.getLedPlus().addActionListener(new ControlButtonListener(view.getLedPlus()));
+        view.getTest().addKeyListener(new ActionKeysListener());
 
 //Combobox listners
         view.getCOMPort().addItemListener((ItemEvent e) -> {
@@ -149,7 +152,7 @@ public class Controller {
     }
 
     ////Keyboard
-    private class ActionKeysListner extends KeyAdapter {
+    private class ActionKeysListener extends KeyAdapter {
 
         String commandON;
         String commandOFF;
@@ -189,11 +192,11 @@ public class Controller {
     }
 
 //Buttons
-    private class ControlButtonListner implements ActionListener {
+    private class ControlButtonListener implements ActionListener {
 
         JButton button;
 
-        private ControlButtonListner(JButton button) {
+        private ControlButtonListener(JButton button) {
             this.button = button;
         }
 
@@ -223,7 +226,7 @@ public class Controller {
     }
 
     //Check Box - Led, Mode, 2x - LIstners
-    private class LedBoxListner implements ItemListener {
+    private class LedBoxListener implements ItemListener {
 
         @Override
         public void itemStateChanged(ItemEvent e) {
@@ -237,7 +240,7 @@ public class Controller {
 
     }
 
-    private class AdcBoxListner implements ItemListener {
+    private class AdcBoxListener implements ItemListener {
 
         @Override
         public void itemStateChanged(ItemEvent e) {
