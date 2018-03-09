@@ -1,54 +1,62 @@
-package com.mycompany.comjava;
+package com.mycompany.comjava.controller;
 
+import com.mycompany.comjava.VoltageCalculation;
 import com.mycompany.comjava.gui.MainFrame;
-import java.io.UnsupportedEncodingException;
+
 import java.util.Arrays;
+import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.mycompany.comjava.logger.TextComponentLogger;
 import jssc.SerialPort;
 import jssc.SerialPortEvent;
 import jssc.SerialPortEventListener;
 import jssc.SerialPortException;
 import jssc.SerialPortList;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-public final class SerialPortModel implements VoltageCalculation{
+@Component
+public final class SerialPortController implements VoltageCalculation {
 
-    private static SerialPort mainPort;
+    @Autowired
+    private TextComponentLogger logger;
+    private SerialPort mainPort;
     private String portName;
 
     private int portSpeed, bits, stopBits, parity;
     private final MainFrame viev;
 
-    public SerialPortModel(MainFrame viev) {
+    public SerialPortController(MainFrame viev) {
         this.viev = viev;
         this.mainPort = null;
         putPortToBox();
-        //set defaut port config
+    }
+    
+    private void setDefaultValues(){
         mainPort = null;
         portName = "COM3";
         portSpeed = 76800;
         bits = SerialPort.DATABITS_8;
         stopBits = SerialPort.STOPBITS_1;
         parity = SerialPort.PARITY_NONE;
-
     }
 
-    private SerialPort createPort() {
+    private SerialPort createNewPort() {
         SerialPort port = null;
 
         if (mainPort == null || !mainPort.isOpened()) {
             try {
                 port = new SerialPort(portName);
-                
                 port.openPort();
                 port.setParams(portSpeed, bits, stopBits, parity);
                 port.setEventsMask(SerialPort.MASK_RXCHAR);
-                port.addEventListener(new MySerialEventListner());
+                port.addEventListener(new MySerialEventListener());
                 
             } catch (SerialPortException ex) {
-                Logger.getLogger(SerialPortModel.class.getName()).log(Level.SEVERE, null, ex);
-                writeToLog(" Port is not creating ");
+                Logger.getLogger(SerialPortController.class.getName()).log(Level.SEVERE, null, ex);
+                logger.ERROR(" Port is not creating ");
             }
         }
 
@@ -60,10 +68,10 @@ public final class SerialPortModel implements VoltageCalculation{
         try {
 
             mainPort.writeBytes(data.getBytes());
-            writeToLog(data + " sent");
+            logger.INFO(data + " sent");
 
         } catch (SerialPortException ex) {
-            writeToLog(data + " not sended, some exception");
+            logger.ERROR(data + " Did not send, some exception");
         }
 
     }
@@ -76,27 +84,18 @@ public final class SerialPortModel implements VoltageCalculation{
             mainPort.writeBytes(request.getBytes());
 
         } catch (SerialPortException ex) {
-            Logger.getLogger(SerialPortModel.class.getName()).log(Level.SEVERE, null, ex);
-            writeToLog(" Read err ");
+            Logger.getLogger(SerialPortController.class.getName()).log(Level.SEVERE, null, ex);
+            logger.ERROR(" Read err ");
         }
-
-    }
-
-    public void writeToLog(String data) {
-        viev.getLog().setText(viev.getLog().getText() + "\n" + data);
-
-    }
-
-    public void clearLog() {
-        viev.getLog().setText("");
 
     }
 
     public void putPortToBox() {
         viev.getCOMPort().removeAllItems();
-        for (String port : SerialPortList.getPortNames()) {
-            viev.getCOMPort().addItem(port);
-        }
+        Optional<String[]> portNamesOptional = Optional.of(SerialPortList.getPortNames());
+        if (portNamesOptional.isPresent()){
+            Arrays.stream(portNamesOptional.get()).forEach(port ->  viev.getCOMPort().addItem(port));
+        }else logger.ERROR("Port not found");
     }
 
 //<editor-fold defaultstate="collapsed" desc="get set">
@@ -108,7 +107,7 @@ public final class SerialPortModel implements VoltageCalculation{
     public void setPortName(String portName) {
 
         this.portName = portName;
-        writeToLog(" Port is changed to " + portName);
+        logger.INFO(" Port is changed to " + portName);
 
     }
 
@@ -119,9 +118,9 @@ public final class SerialPortModel implements VoltageCalculation{
 
     public void setPortSpeed(int portSpeed) {
         this.portSpeed = portSpeed;
-        writeToLog(" Speed is changed to " + portSpeed);
+        logger.INFO(" Speed is changed to " + portSpeed);
         mainPort = null;
-        mainPort = createPort();
+        mainPort = createNewPort();
     }
 
     public int getBits() {
@@ -130,7 +129,7 @@ public final class SerialPortModel implements VoltageCalculation{
 
     public void setBits(int bits) {
         this.bits = bits;
-        writeToLog(" Bits quantity changed to " + bits);
+        logger.INFO(" Bits quantity changed to " + bits);
 
     }
 
@@ -140,7 +139,7 @@ public final class SerialPortModel implements VoltageCalculation{
 
     public void setStopBits(int stopBits) {
         this.stopBits = stopBits;
-        writeToLog(" Stop bits changed to " + stopBits);
+        logger.INFO(" Stop bits changed to " + stopBits);
     }
 
     public int getParity() {
@@ -149,7 +148,7 @@ public final class SerialPortModel implements VoltageCalculation{
 
     public void setParity(int parity) {
         this.parity = parity;
-        writeToLog(" Parity changed to " + parity);
+        logger.INFO(" Parity changed to " + parity);
     }
 
 //</editor-fold>
@@ -160,22 +159,20 @@ public final class SerialPortModel implements VoltageCalculation{
     }
     
     
-    private class MySerialEventListner implements SerialPortEventListener{
+    private class MySerialEventListener implements SerialPortEventListener{
       int count=0;
      
         @Override
         public void serialEvent(SerialPortEvent event) {
-            count++;
-            if(event.isRXCHAR()){
-                
+            if(event.isRXCHAR()) {
+                int bufferSize = event.getEventValue();
                 try {
-                    
-                   if(count==1)  viev.getBattaryVoltage().setText(mainPort.readString(event.getEventValue())); 
-                   if(count==2) { viev.getSolarVoltage().setText(mainPort.readString(event.getEventValue())); count=0; }
-                } catch (SerialPortException ex) {
-                    Logger.getLogger(SerialPortModel.class.getName()).log(Level.SEVERE, null, ex);
+                    byte[] buffer = mainPort.readBytes(bufferSize);
+
+                } catch (SerialPortException e) {
+                    e.printStackTrace();
                 }
-}
+            }
         }
         
     }

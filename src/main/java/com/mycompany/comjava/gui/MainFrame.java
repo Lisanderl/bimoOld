@@ -5,7 +5,7 @@
  */
 package com.mycompany.comjava.gui;
 
-import com.mycompany.comjava.SerialPortModel;
+import com.mycompany.comjava.controller.SerialPortController;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -22,13 +22,13 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JSlider;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import jssc.SerialPort;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.stereotype.Component;
 
 /**
  *
@@ -36,6 +36,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
+@Component
 public class MainFrame extends JFrame {
 
     private JLabel configL, speedL, bitsL, stopBitsL;
@@ -47,11 +48,11 @@ public class MainFrame extends JFrame {
     private JComboBox<String> COMPort;
     private JComboBox<Integer> portSpeed, bits, stopBits, parity;
     private JTextField solarVoltage, battaryVoltage;
-    private final SerialPortModel model;
+    private final SerialPortController model;
 
     public MainFrame() throws HeadlessException {
         init();
-        model = new SerialPortModel(this);
+        model = new SerialPortController(this);
         super.setTitle("Bimo user interface");
         super.setMinimumSize(new Dimension(500, 400));
         super.setDefaultCloseOperation(EXIT_ON_CLOSE);

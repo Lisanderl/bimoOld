@@ -3,11 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mycompany.comjava;
+package com.mycompany.comjava.controller;
 
 import com.mycompany.comjava.gui.MainFrame;
-import lombok.Getter;
-import lombok.Setter;
+import com.mycompany.comjava.logger.TextComponentLogger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -21,17 +22,22 @@ import java.util.TimerTask;
 
 import javax.swing.JButton;
 
-public class Controller {
+@Component
+public class GuiController {
 
+    @Autowired
     private final MainFrame view;
-    private final SerialPortModel model;
+    @Autowired
+    private final SerialPortController model;
+    @Autowired
+    private TextComponentLogger logger;
     private boolean switchCommand = false; // special field for corect control
     private String commandON = " ";
     private String commandOFF = " ";
     private final int time = 1; // click time
     private Timer t1;
 
-    public Controller(MainFrame view) {
+    public GuiController(MainFrame view) {
 
         this.view = view;
         model = this.view.getModel();
@@ -208,7 +214,7 @@ public class Controller {
                     model.putPortToBox();
                     break;
                 case "Clear":
-                    model.clearLog();
+                    logger.clearLog();
                     break;
                 case "Led+":
                     model.write("L");
