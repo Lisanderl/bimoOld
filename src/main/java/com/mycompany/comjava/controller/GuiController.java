@@ -25,129 +25,129 @@ import javax.swing.JButton;
 @Component
 public class GuiController {
 
-    @Autowired
-    private final MainFrame view;
-    @Autowired
-    private final SerialPortController model;
-    @Autowired
+    private MainFrame mainFrame;
+    private SerialPortController serialPortController;
     private TextComponentLogger logger;
-    private boolean switchCommand = false; // special field for corect control
+    private boolean switchCommand = false; // special field for correct control
     private String commandON = " ";
     private String commandOFF = " ";
     private final int time = 1; // click time
     private Timer t1;
 
-    public GuiController(MainFrame view) {
+    @Autowired
+    public GuiController(MainFrame mainFrame,
+                         SerialPortController serialPortController) {
 
-        this.view = view;
-        model = this.view.getModel();
-        addListners();
-
+        this.mainFrame=mainFrame;
+        this.serialPortController=serialPortController;
+        this.logger = TextComponentLogger.getInstance(mainFrame.getLog());
+        addSerialPortAdjListeners();
+        addControlListeners();
     }
 
-    private void addListners() {
+    private void addSerialPortAdjListeners() {
 
-        view.getAdc().addItemListener(new AdcBoxListener());
-
-        view.getLed().addItemListener(new LedBoxListener());
-
-        view.getStraight().addActionListener(new ControlButtonListener(view.getStraight()));
-        view.getBack().addActionListener(new ControlButtonListener(view.getBack()));
-        view.getLeft().addActionListener(new ControlButtonListener(view.getLeft()));
-        view.getRight().addActionListener(new ControlButtonListener(view.getRight()));
-        view.getStop().addActionListener(new ControlButtonListener(view.getStop()));
-        view.getRefresh().addActionListener(new ControlButtonListener(view.getRefresh()));
-        view.getClearLog().addActionListener(new ControlButtonListener(view.getClearLog()));
-        view.getLedPlus().addActionListener(new ControlButtonListener(view.getLedPlus()));
-        view.getTest().addKeyListener(new ActionKeysListener());
-
+        mainFrame.getRefresh().addActionListener(new ControlButtonListener(mainFrame.getRefresh()));
 //Combobox listners
-        view.getCOMPort().addItemListener((ItemEvent e) -> {
+        mainFrame.getCOMPort().addItemListener((ItemEvent e) -> {
             if (e.getStateChange() == ItemEvent.SELECTED) {
-                model.setPortName((String) e.getItem());
+                serialPortController.setPortName((String) e.getItem());
             }
         });
 
-        view.getPortSpeed().addItemListener((ItemEvent e) -> {
+        mainFrame.getPortSpeed().addItemListener((ItemEvent e) -> {
             if (e.getStateChange() == ItemEvent.SELECTED) {
-                model.setPortSpeed((int) e.getItem());
-
+                serialPortController.setPortSpeed((int) e.getItem());
             }
         });
 
-        view.getBits().addItemListener((ItemEvent e) -> {
+        mainFrame.getBits().addItemListener((ItemEvent e) -> {
             if (e.getStateChange() == ItemEvent.SELECTED) {
-                model.setBits((int) e.getItem());
+                serialPortController.setBits((int) e.getItem());
             }
         });
 
-        view.getStopBits().addItemListener((ItemEvent e) -> {
+        mainFrame.getStopBits().addItemListener((ItemEvent e) -> {
             if (e.getStateChange() == ItemEvent.SELECTED) {
-                model.setStopBits((int) e.getItem());
+                serialPortController.setStopBits((int) e.getItem());
             }
         });
 
-        view.getParity().addItemListener((ItemEvent e) -> {
+        mainFrame.getParity().addItemListener((ItemEvent e) -> {
             if (e.getStateChange() == ItemEvent.SELECTED) {
-                model.setParity((int) e.getItem());
+                serialPortController.setParity((int) e.getItem());
             }
         });
 
     }
+
+    private void addControlListeners(){
+        mainFrame.getAdc().addItemListener(new AdcBoxListener());
+        mainFrame.getLed().addItemListener(new LedBoxListener());
+        mainFrame.getStraight().addActionListener(new ControlButtonListener(mainFrame.getStraight()));
+        mainFrame.getBack().addActionListener(new ControlButtonListener(mainFrame.getBack()));
+        mainFrame.getLeft().addActionListener(new ControlButtonListener(mainFrame.getLeft()));
+        mainFrame.getRight().addActionListener(new ControlButtonListener(mainFrame.getRight()));
+        mainFrame.getStop().addActionListener(new ControlButtonListener(mainFrame.getStop()));
+        mainFrame.getClearLog().addActionListener(new ControlButtonListener(mainFrame.getClearLog()));
+        mainFrame.getLedPlus().addActionListener(new ControlButtonListener(mainFrame.getLedPlus()));
+        mainFrame.getTest().addKeyListener(new ActionKeysListener());
+    }
+
 // Key interpretator
 
     private void buttonHunter(String button) {
 
         switch (button) {
             case "W":
-                view.getStraight().doClick(time);
+                mainFrame.getStraight().doClick(time);
                 if (getCommandOFF().equals("WW")) {
                     setCommandOFF("");
                 }
                 break;
             case "D":
-                view.getRight().doClick(time);
+                mainFrame.getRight().doClick(time);
 
                 if (getCommandOFF().equals("DD")) {
                     setCommandOFF("");
                 }
                 break;
             case "A":
-                view.getLeft().doClick(time);
+                mainFrame.getLeft().doClick(time);
                 if (getCommandOFF().equals("AA")) {
                     setCommandOFF("");
                 }
                 break;
             case "S":
-                view.getBack().doClick(time);
+                mainFrame.getBack().doClick(time);
                 if (getCommandOFF().equals("SS")) {
                     setCommandOFF("");
                 }
                 break;
             case "C":
-                view.getStop().doClick(time);
+                mainFrame.getStop().doClick(time);
 
                 break;
             case "WW":
-                view.getStop().doClick(time);
+                mainFrame.getStop().doClick(time);
                 if (getCommandON().equals("W")) {
                     setCommandON("");
                 }
                 break;
             case "AA":
-                view.getStop().doClick(time);
+                mainFrame.getStop().doClick(time);
                 if (getCommandON().equals("A")) {
                     setCommandON("");
                 }
                 break;
             case "DD":
-                view.getStop().doClick(time);
+                mainFrame.getStop().doClick(time);
                 if (getCommandON().equals("D")) {
                     setCommandON("");
                 }
                 break;
             case "SS":
-                view.getStop().doClick(time);
+                mainFrame.getStop().doClick(time);
                 if (getCommandON().equals("S")) {
                     setCommandON("");
                 }
@@ -172,7 +172,6 @@ public class GuiController {
                         && (commandON.equals("A")
                         || commandON.equals("D"))) {
                     switchCommand=true;
-                      System.out.println("Test 1 OK");
                 }else switchCommand=false;
                 setCommandON(commandON);
                 buttonHunter(commandON);
@@ -185,7 +184,6 @@ public class GuiController {
             commandOFF = e.getKeyText(e.getKeyCode()) + e.getKeyText(e.getKeyCode());
             if (!commandOFF.equals(getCommandOFF())) {
                 if(switchCommand&&(commandOFF.equals("AA")||commandOFF.equals("DD"))){
-                    System.out.println("Test 2 OK");
                     setCommandON("W");
                 buttonHunter("W");
                 }else{
@@ -211,19 +209,19 @@ public class GuiController {
 
             switch (button.getText()) {
                 case "Ref":
-                    model.putPortToBox();
+                    serialPortController.putPortToBox();
                     break;
                 case "Clear":
                     logger.clearLog();
                     break;
                 case "Led+":
-                    model.write("L");
+                    serialPortController.write("L");
                     break;
                 //case "Ctrl":
-                // model.write("C");
+                // serialPortController.write("C");
                 // break;
                 default:
-                    model.write(button.getText());
+                    serialPortController.write(button.getText());
                     break;
             }
 
@@ -239,7 +237,7 @@ public class GuiController {
 
             if ((e.getStateChange() == ItemEvent.SELECTED) | (e.getStateChange() == ItemEvent.DESELECTED)) {
 
-                model.write("L");
+                serialPortController.write("L");
             }
 
         }
@@ -276,7 +274,7 @@ public class GuiController {
             public void run() {
                 //  read(); command
 
-                model.readRequest("G");
+                serialPortController.readRequest("G");
             }
         };
         return tt1;

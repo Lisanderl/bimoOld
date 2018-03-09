@@ -6,23 +6,29 @@ import org.springframework.stereotype.Component;
 import javax.swing.text.JTextComponent;
 import java.awt.*;
 
-@Component
 public class TextComponentLogger {
+
+    private static TextComponentLogger singleton;
 
     private JTextComponent textComponent;
 
-    public TextComponentLogger(JTextComponent textComponent) {
+    private TextComponentLogger(JTextComponent textComponent) {
         this.textComponent = textComponent;
     }
 
+    public static TextComponentLogger getInstance(JTextComponent textComponent){
+        if (singleton==null){
+            singleton = new TextComponentLogger(textComponent);
+        }
+        return singleton;
+    }
+
     public void INFO(String data){
-        textComponent.setSelectedTextColor(Color.BLUE);
-        writeToLog(data);
+        writeToLog("[INFO]" + data);
     }
 
     public void ERROR(String data){
-        textComponent.setSelectedTextColor(Color.RED);
-        writeToLog(data);
+        writeToLog("[ERROR]" + data);
     }
 
     private void writeToLog(String data) {

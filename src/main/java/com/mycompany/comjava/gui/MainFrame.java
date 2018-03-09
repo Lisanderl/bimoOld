@@ -5,7 +5,6 @@
  */
 package com.mycompany.comjava.gui;
 
-import com.mycompany.comjava.controller.SerialPortController;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -44,15 +43,13 @@ public class MainFrame extends JFrame {
     private JButton straight, back, left, right, test, stop, refresh, clearLog, ledPlus;
     private JCheckBox led, adc;
     private JTextArea log;
-    private JScrollPane scrool;
+    private JScrollPane scroll;
     private JComboBox<String> COMPort;
     private JComboBox<Integer> portSpeed, bits, stopBits, parity;
-    private JTextField solarVoltage, battaryVoltage;
-    private final SerialPortController model;
+    private JTextField solarVoltage, batteryVoltage;
 
     public MainFrame() throws HeadlessException {
         init();
-        model = new SerialPortController(this);
         super.setTitle("Bimo user interface");
         super.setMinimumSize(new Dimension(500, 400));
         super.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -86,19 +83,22 @@ public class MainFrame extends JFrame {
         clearLog = new JButton("Clear");
         ledPlus = new JButton("Led+");
         //comboboxes...
-        COMPort = new JComboBox<String>();
-        portSpeed = new JComboBox<Integer>();
-        bits = new JComboBox<Integer>();
-        stopBits = new JComboBox<Integer>();
-        parity = new JComboBox<Integer>();
+        COMPort = new JComboBox<>();
+        portSpeed = new JComboBox<>();
+        bits = new JComboBox<>();
+        stopBits = new JComboBox<>();
+        parity = new JComboBox<>();
         //other
-        log = new JTextArea("Hi, please push the 'test' button, \n if You wish control with keyboard ");
-        scrool = new JScrollPane(log);
+        log = new JTextArea ("Hi, first change speed and add other adjustments," +
+                             " \n then push the 'test' button," +
+                             " \n if You wish control with keyboard ");
+        log.setDisabledTextColor(Color.BLACK);
+        scroll = new JScrollPane(log);
         adc = new JCheckBox("ADC");
         led = new JCheckBox("Led");
 
         solarVoltage = new JTextField(7);
-        battaryVoltage = new JTextField(7);
+        batteryVoltage = new JTextField(7);
 
     }
 
@@ -130,9 +130,9 @@ public class MainFrame extends JFrame {
         //left
         leftPanel.setPreferredSize(new Dimension(getWidth() / 2 + 100, getHeight() - 80));
         leftPanel.setBackground(Color.lightGray);
-        scrool.setPreferredSize(new Dimension(430, 150));
+        scroll.setPreferredSize(new Dimension(430, 150));
         leftPanel.add(new JPanel(), BorderLayout.NORTH);
-        leftPanel.add(scrool, BorderLayout.CENTER);
+        leftPanel.add(scroll, BorderLayout.CENTER);
         leftPanel.add(bottomLeft, BorderLayout.SOUTH);
         bottomLeft.add(straight);
         bottomLeft.add(left);
@@ -151,8 +151,8 @@ public class MainFrame extends JFrame {
         rightPanel.add(solarVoltage, c);
         solarVoltage.setEditable(false);
         c.gridx = 6;
-        rightPanel.add(battaryVoltage, c);
-        battaryVoltage.setEditable(false);
+        rightPanel.add(batteryVoltage, c);
+        batteryVoltage.setEditable(false);
         // rightPanel.add(adc, c);
         c.gridx = 6;
         c.gridy = 2;
@@ -164,7 +164,6 @@ public class MainFrame extends JFrame {
         c.gridx = 5;
         c.gridy = 3;
         rightPanel.add(clearLog, c);
-
    
         //combo
         comboBoxConfig();
