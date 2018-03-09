@@ -274,7 +274,7 @@ public class GuiController {
             public void run() {
                 //  read(); command
 
-                serialPortController.readRequest("G");
+                serialPortController.writeRequest("G");
             }
         };
         return tt1;

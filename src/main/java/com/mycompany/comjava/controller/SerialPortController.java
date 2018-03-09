@@ -78,7 +78,7 @@ public class SerialPortController {
 
     // request - data request
     // answ
-    public void readRequest(String request) {
+    public void writeRequest(String request) {
 
         try {
             mainPort.writeBytes(request.getBytes());
@@ -111,7 +111,7 @@ public class SerialPortController {
                 mainPort.closePort();
             } catch (SerialPortException e) {
                 e.printStackTrace();
-                logger.ERROR("Port not closed");
+                logger.ERROR("Port has not closed");
             }
         }
         mainPort = null;
@@ -121,38 +121,37 @@ public class SerialPortController {
     public void setPortName(String portName) {
         this.portName = portName;
         resetPort();
-        logger.INFO(" Port is changed to " + portName);
+        logger.INFO(" Port has changed to " + portName);
     }
 
     public void setPortSpeed(int portSpeed) {
         this.portSpeed = portSpeed;
         resetPort();
-        logger.INFO(" Speed is changed to " + portSpeed);
+        logger.INFO(" Speed has changed to " + portSpeed);
     }
 
     public void setBits(int bits) {
         this.bits = bits;
         resetPort();
-        logger.INFO(" Bits quantity changed to " + bits);
+        logger.INFO(" Bits quantity has changed to " + bits);
     }
 
     public void setStopBits(int stopBits) {
         this.stopBits = stopBits;
         resetPort();
-        logger.INFO(" Stop bits changed to " + stopBits);
+        logger.INFO(" Stop bits has changed to " + stopBits);
     }
 
     public void setParity(int parity) {
         this.parity = parity;
         resetPort();
-        logger.INFO(" Parity changed to " + parity);
+        logger.INFO(" Parity has changed to " + parity);
     }
 
 //</editor-fold>
 
     
     private class MySerialEventListener implements SerialPortEventListener{
-      int count=0;
      
         @Override
         public void serialEvent(SerialPortEvent event) {
