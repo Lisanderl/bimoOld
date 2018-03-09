@@ -1,0 +1,71 @@
+#include <AdcScanner.h>
+#include <nRF24L01.h>
+#include <printf.h>
+#include <RF24.h>
+#include <RF24_config.h>
+#include <SPI.h>
+
+
+
+RF24 radio(A0,A1);
+AdcScanner adc(INTERNAL);
+char data;
+float i2;
+int i;
+
+void setup() {
+ 
+Serial.begin(38400);
+nrfSetup();
+
+}
+void loop() {
+
+      
+}
+
+void serialEvent(){
+data = Serial.read();
+
+
+  
+}
+ 
+
+
+void nrfSetup(){
+bool master = true;
+//byte addresses[][6] = {"1Node","2Node"};
+  byte addr[][2] = {0xC2, 0xC2, 0xC2, 0xC2, 0xC2},{0xE7, 0xE7, 0xE7, 0xE7, 0xE7};
+   
+const int max_payload_size = 32;
+uint8_t cnt; 
+radio.begin();
+  radio.enableDynamicPayloads();
+  radio.setCRCLength( RF24_CRC_16 ) ;
+radio.setChannel(4);  // Channel number - 0-125
+
+radio.setRetries(5,5); // 1 - delay, 2 - amount
+radio.setAutoAck( true ) ;
+if(master)
+{ 
+    radio.openWritingPipe(addr[][0]);
+    radio.openReadingPipe(1,addr[][1]);
+} 
+else 
+{
+    radio.openWritingPipe(addr[][1]);
+    radio.openReadingPipe(1,addr[][0]);
+} ;
+
+radio.powerUp();
+delay(100);
+radio.startListening();
+delay(50);
+ radio.printDetails();
+}
+
+
+
+
+

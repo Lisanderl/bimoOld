@@ -1,0 +1,163 @@
+#include <BimoControl.h>
+#include <nRF24L01.h>
+#include <printf.h>
+#include <RF24.h>
+#include <RF24_config.h>
+#include <SPI.h>
+#include <Ultrasonic.h>
+
+#define CONTROLS (d=='W'||d=='S'||d=='A'||d=='D'||d=='C'||d=='L')
+#define GO_STRAIGHT LEFT_M_on RIGHT_M_on
+#define GO_BACK LEFT_M_off RIGHT_M_off
+#define GO_LEFT RIGHT_M_on LEFT_M_off
+#define GO_RIGHT LEFT_M_on RIGHT_M_off
+
+Motor* m1(10, 4, 3);
+Motor* m2(9, 7, 8);
+BimoControl bimo(m1,m2);
+
+
+//NRF24
+RF24 radio(A0, A1);
+char data[32];
+char d ;
+
+//ECHO
+int Trig = 8;
+int Echo = 7;
+Ultrasonic ultrasonic(Trig, Echo);
+
+//Mashine control
+int ledPin = 2;// for tests
+int x = 0;
+int led1Pin = 5;
+int led2Pin = 6;
+unsigned int led1Mode = 0;
+unsigned int led2Mode = 0;
+
+void setup() {
+  TCCR1B = TCCR1B & 0b11111000 || 5; //set PWM to low frecency
+  analogReference(INTERNAL);
+  pinMode(ledPin, OUTPUT);
+  nrfSetup();
+  blinc(230);
+  sendADC();
+  blinc(30);
+
+}
+void loop() {
+  if (radio.available()) {
+    char len = radio.getDynamicPayloadSize();
+    radio.read(data, len);
+    d = data[0];
+    if (CONTROLS) {
+      blinc(15);
+//      interpretator();
+    }
+    if (d == 'G') {
+      blinc(15);
+      sendADC();
+    }
+  }
+}
+
+void nrfSetup() {
+  bool master = false;
+
+  byte addr1[] = {0xC2, 0xC2, 0xC2, 0xC2, 0xC2};
+  byte addr2[] = {0xE7, 0xE7, 0xE7, 0xE7, 0xE7};
+
+  radio.begin();
+  radio.txDelay = 160;
+  radio.enableDynamicPayloads();
+  radio.setCRCLength( RF24_CRC_16 ) ;
+  radio.setChannel(4);  // Channel number - 0-125
+  radio.setDataRate(RF24_1MBPS);
+  radio.setPALevel(2);
+  radio.setRetries(5, 5); // 1 - delay, 2 - amount
+  radio.setAutoAck( true ) ;
+  if (master)
+  {
+    radio.openWritingPipe(addr2);
+    radio.openReadingPipe(1, addr1);
+  }
+  else
+  {
+    radio.openWritingPipe(addr1);
+    radio.openReadingPipe(1, addr2);
+  } ;
+
+  radio.powerUp();
+  blinc(100);
+  radio.startListening();
+  blinc(10);
+
+}
+
+void sendADC() {
+  int sizeADC;
+  int i;
+  char str[4];
+  radio.stopListening();
+
+  i = analogRead(7);
+  itoa(i, str, 10);
+  if (i < 1000) {
+    sizeADC = 3;
+  } else {
+    sizeADC = 4;
+  }
+  radio.write(str, sizeADC);
+
+  i = analogRead(6);
+  itoa(i, str, 10);
+  if (i < 1000) {
+    sizeADC = 3;
+  } else {
+    sizeADC = 4;
+  }
+  radio.write(str, sizeADC);
+
+  radio.startListening();
+  delay(1);
+}
+
+
+void blinc(int ms) {
+
+  digitalWrite(ledPin, HIGH);   // sets the LED on
+  delay(ms);                  // waits for a second
+  digitalWrite(ledPin, LOW);    // sets the LED off
+  delay(ms);
+
+}
+
+
+void ledON(int pin, int mode) {
+  int const1 = 51;
+  analogWrite(pin, const1 * mode);
+}
+/*
+void interpretator() {
+
+  switch (d) {
+    case 'W': setPWM(140, 105); GO_STRAIGHT;
+      break;
+    case 'S': setPWM(120, 85); GO_BACK;
+      break;
+    case 'A': setPWM(180, 145); GO_LEFT;
+      break;
+    case 'D': setPWM(180, 145); GO_RIGHT;
+      break;
+    case 'L': if (led1Mode == 5) {
+        led1Mode = -1;
+      } ledON(led1Pin, ++led1Mode);
+      break;
+    default : setPWM(0, 0); STOP;
+  }
+}
+
+
+*/
+
+
