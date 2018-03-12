@@ -119,7 +119,9 @@ void blinc(int ms) {
   delay(ms);                  // waits for a second
   digitalWrite(ledPin, LOW);    // sets the LED off
   delay(ms);
-
+  char serialData[0];
+  sizeof(serialData);
+  String
 }
 
 

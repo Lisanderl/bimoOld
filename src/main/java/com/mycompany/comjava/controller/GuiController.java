@@ -43,6 +43,7 @@ public class GuiController {
         this.logger = TextComponentLogger.getInstance(mainFrame.getLog());
         addSerialPortAdjListeners();
         addControlListeners();
+
     }
 
     private void addSerialPortAdjListeners() {

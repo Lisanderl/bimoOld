@@ -3,6 +3,7 @@ package com.mycompany.comjava.gui;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.mycompany.comjava.config.AppConfig;
+import com.mycompany.comjava.controller.Command;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -28,6 +29,9 @@ public class MainFrameTest {
         assertThat(lal.startsWith("I")).isTrue();
         assertThat(lal.startsWith("i", 1)).isTrue();
         assertThat(lal2.replaceFirst("AD1C", "")).isEqualTo("12");
+
+        assertThat(Command.Motion.BACK.get()).isEqualTo("S");
+        assertThat(Command.Light.LIGHT_ON.get()).isEqualTo("L+");
 
     }
 
