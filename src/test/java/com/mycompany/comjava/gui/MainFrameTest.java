@@ -2,6 +2,9 @@ package com.mycompany.comjava.gui;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mycompany.comjava.SetupDto;
 import com.mycompany.comjava.config.AppConfig;
 import com.mycompany.comjava.controller.Command;
 import org.junit.Test;
@@ -14,10 +17,11 @@ import java.nio.charset.StandardCharsets;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {AppConfig.class})
+
 public class MainFrameTest {
 
     @Test
-    public void test(){
+    public void test() throws JsonProcessingException {
 
         byte[] x = {73,105,126};
         String lal = new String(x, StandardCharsets.UTF_8);
@@ -30,8 +34,12 @@ public class MainFrameTest {
         assertThat(lal.startsWith("i", 1)).isTrue();
         assertThat(lal2.replaceFirst("AD1C", "")).isEqualTo("12");
 
-        assertThat(Command.Motion.BACK.get()).isEqualTo("S");
         assertThat(Command.Light.LIGHT_ON.get()).isEqualTo("L+");
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        SetupDto setupDto =  new SetupDto(50,100,20,"+");
+        System.out.println(objectMapper.writeValueAsString(setupDto));
+        System.out.println("///////////////////////////////////////////////////////////");
 
     }
 
