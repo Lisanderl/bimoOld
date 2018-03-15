@@ -6,13 +6,11 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mycompany.comjava.SetupDto;
 import com.mycompany.comjava.config.AppConfig;
-import com.mycompany.comjava.controller.Command;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -33,8 +31,6 @@ public class MainFrameTest {
         assertThat(lal.startsWith("I")).isTrue();
         assertThat(lal.startsWith("i", 1)).isTrue();
         assertThat(lal2.replaceFirst("AD1C", "")).isEqualTo("12");
-
-        assertThat(Command.Light.LIGHT_ON.get()).isEqualTo("L+");
 
         ObjectMapper objectMapper = new ObjectMapper();
         SetupDto setupDto =  new SetupDto(50,100,20,"+");
