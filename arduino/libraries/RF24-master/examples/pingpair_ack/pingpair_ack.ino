@@ -49,7 +49,7 @@ void setup(){
   radio.setAutoAck(1);                    // Ensure autoACK is enabled
   radio.enableAckPayload();               // Allow optional ack payloads
   radio.setRetries(0,15);                 // Smallest time between retries, max no. of retries
-  radio.setPayloadSize(1);                // Here we are sending 1-byte payloads to test the call-response speed
+  radio.setPayloadSize(1);                // Here we are sending 1-byte payloads to test the call-response speedSlider
   radio.openWritingPipe(pipes[1]);        // Both radios listen on the same pipes by default, and switch when writing
   radio.openReadingPipe(1,pipes[0]);
   radio.startListening();                 // Start listening

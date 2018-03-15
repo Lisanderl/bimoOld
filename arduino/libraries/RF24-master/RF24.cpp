@@ -33,7 +33,7 @@ void RF24::csn(bool mode)
 	return;
 	
 #elif defined(ARDUINO) && !defined (RF24_SPI_TRANSACTIONS)
-	// Minimum ideal SPI bus speed is 2x data rate
+	// Minimum ideal SPI bus speedSlider is 2x data rate
 	// If we assume 2Mbs data rate and 16Mhz clock, a
 	// divider of 4 is the minimum we want.
 	// CLK:BUS 8Mhz:2Mhz, 16Mhz:4Mhz, or 20Mhz:5Mhz
@@ -657,7 +657,7 @@ bool RF24::begin(void)
     p_variant = true ;
   }*/
   
-  // Then set the data rate to the slowest (and most reliable) speed supported by all
+  // Then set the data rate to the slowest (and most reliable) speedSlider supported by all
   // hardware.
   setDataRate( RF24_1MBPS ) ;
 
@@ -1439,7 +1439,7 @@ uint8_t RF24::getPALevel(void)
 
 /****************************************************************************/
 
-bool RF24::setDataRate(rf24_datarate_e speed)
+bool RF24::setDataRate(rf24_datarate_e speedSlider)
 {
   bool result = false;
   uint8_t setup = read_register(RF_SETUP) ;
@@ -1452,7 +1452,7 @@ bool RF24::setDataRate(rf24_datarate_e speed)
   #else //16Mhz Arduino
     txDelay=85;
   #endif
-  if( speed == RF24_250KBPS )
+  if( speedSlider == RF24_250KBPS )
   {
     // Must set the RF_DR_LOW to 1; RF_DR_HIGH (used to be RF_DR) is already 0
     // Making it '10'.
@@ -1467,7 +1467,7 @@ bool RF24::setDataRate(rf24_datarate_e speed)
   {
     // Set 2Mbs, RF_DR (RF_DR_HIGH) is set 1
     // Making it '01'
-    if ( speed == RF24_2MBPS )
+    if ( speedSlider == RF24_2MBPS )
     {
       setup |= _BV(RF_DR_HIGH);
       #if defined(__arm__) || defined (RF24_LINUX) || defined (__ARDUINO_X86__)

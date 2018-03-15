@@ -210,7 +210,7 @@
   values of \ref bcm2835PWMClockDivider.
    
   For example, say you wanted to drive a DC motor with PWM at about 1kHz, 
-  and control the speed in 1/1024 increments from 
+  and control the speedSlider in 1/1024 increments from
   0/1024 (stopped) through to 1024/1024 (full on). In that case you might set the 
   clock divider to be 16, and the RANGE to 1024. The pulse repetition frequency will be
   1.2MHz/1024 = 1171.875Hz.
@@ -878,7 +878,7 @@ typedef enum
 
 /// \brief bcm2835SPISpeed
 /// Specifies the divider used to generate the SPI clock from the system clock.
-/// Figures below give the clock speed instead of clock divider.
+/// Figures below give the clock speedSlider instead of clock divider.
 #define BCM2835_SPI_SPEED_64MHZ BCM2835_SPI_CLOCK_DIVIDER_4
 #define BCM2835_SPI_SPEED_32MHZ BCM2835_SPI_CLOCK_DIVIDER_8
 #define BCM2835_SPI_SPEED_16MHZ BCM2835_SPI_CLOCK_DIVIDER_16
@@ -1435,7 +1435,7 @@ extern "C" {
     extern void bcm2835_spi_setBitOrder(uint8_t order);
 
     /*! Sets the SPI clock divider and therefore the 
-      SPI clock speed. 
+      SPI clock speedSlider.
       \param[in] divider The desired SPI clock divider, one of BCM2835_SPI_CLOCK_DIVIDER_*, 
       see \ref bcm2835SPIClockDivider
     */
@@ -1537,7 +1537,7 @@ extern "C" {
     */
     extern void bcm2835_i2c_setSlaveAddress(uint8_t addr);
 
-    /*! Sets the I2C clock divider and therefore the I2C clock speed.
+    /*! Sets the I2C clock divider and therefore the I2C clock speedSlider.
       \param[in] divider The desired I2C clock divider, one of BCM2835_I2C_CLOCK_DIVIDER_*,
       see \ref bcm2835I2CClockDivider
     */

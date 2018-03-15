@@ -51,7 +51,7 @@ void SPI::begin(int busNo){
 void SPI::init()
 {
 	uint8_t bits = RF24_SPIDEV_BITS;
-	uint32_t speed = RF24_SPIDEV_SPEED;
+	uint32_t speedSlider = RF24_SPIDEV_SPEED;
 	uint8_t mode = 0;
 
 	int ret;
@@ -89,19 +89,19 @@ void SPI::init()
 		abort();
 	}
 	/*
-	 * max speed hz
+	 * max speedSlider hz
 	 */
-	ret = ioctl(this->fd, SPI_IOC_WR_MAX_SPEED_HZ, &speed);
+	ret = ioctl(this->fd, SPI_IOC_WR_MAX_SPEED_HZ, &speedSlider);
 	if (ret == -1)
 	{
-		perror("can't set max speed hz");
+		perror("can't set max speedSlider hz");
 		abort();
 	}
 
-	ret = ioctl(this->fd, SPI_IOC_RD_MAX_SPEED_HZ, &speed);
+	ret = ioctl(this->fd, SPI_IOC_RD_MAX_SPEED_HZ, &speedSlider);
 	if (ret == -1)
 	{
-		perror("can't set max speed hz");
+		perror("can't set max speedSlider hz");
 		abort();
 	}
 }

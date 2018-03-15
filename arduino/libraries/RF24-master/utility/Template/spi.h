@@ -70,8 +70,8 @@ private:
 	uint8_t mode;
 	/** word size*/
 	uint8_t bits;
-	/** Set SPI speed*/
-	uint32_t speed;
+	/** Set SPI speedSlider*/
+	uint32_t speedSlider;
 	int fd;
 
 	void init();	

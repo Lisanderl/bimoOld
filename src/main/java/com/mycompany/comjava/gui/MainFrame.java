@@ -14,25 +14,14 @@ import java.awt.GridBagLayout;
 
 import java.awt.HeadlessException;
 
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
+import javax.swing.*;
 
 import jssc.SerialPort;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.stereotype.Component;
 
-/**
- *
- * @author oleg
- */
+
 @Getter
 @Setter
 @Component
@@ -40,18 +29,19 @@ public class MainFrame extends JFrame {
 
     private JLabel configL, speedL, bitsL, stopBitsL;
     private JPanel mainPanel, topPanel, bottomPanel, leftPanel, rightPanel, bottomLeft;
-    private JButton straight, back, left, right, test, stop, refresh, clearLog, ledPlus;
-    private JCheckBox led, adc;
+    private JButton  test, refresh, clearLog;
+    private JCheckBox led, adc, pwm, echo;
     private JTextArea log;
     private JScrollPane scroll;
     private JComboBox<String> COMPort;
-    private JComboBox<Integer> portSpeed, bits, stopBits, parity;
-    private JTextField solarVoltage, batteryVoltage;
+    private JComboBox<Integer> portSpeed, bits, stopBits, parity, echoRange;
+    private JTextField batteryVoltage;
+    private JSlider speedSlider, lightSlider;
 
     public MainFrame() throws HeadlessException {
         init();
         super.setTitle("Bimo user interface");
-        super.setMinimumSize(new Dimension(500, 400));
+        super.setMinimumSize(new Dimension(550, 400));
         super.setDefaultCloseOperation(EXIT_ON_CLOSE);
         addComponents();
         log.setEnabled(false);
@@ -73,32 +63,43 @@ public class MainFrame extends JFrame {
         rightPanel = new JPanel(new GridBagLayout());
         bottomLeft = new JPanel(new FlowLayout());
         //buttons
-        straight = new JButton("W");
-        back = new JButton("S");
-        left = new JButton("A");
-        right = new JButton("D");
-        test = new JButton("test");
-        stop = new JButton("C");
+        test = new JButton("Control with keyboard");
         refresh = new JButton("Ref");
         clearLog = new JButton("Clear");
-        ledPlus = new JButton("Led+");
         //comboboxes...
         COMPort = new JComboBox<>();
         portSpeed = new JComboBox<>();
         bits = new JComboBox<>();
         stopBits = new JComboBox<>();
         parity = new JComboBox<>();
+        echoRange = new JComboBox<>();
         //other
-        log = new JTextArea ("Hi, first change speed and add other adjustments," +
+        log = new JTextArea ("Hi, first change speedSlider and add other adjustments," +
                              " \n then push the 'test' button," +
                              " \n if You wish control with keyboard ");
         log.setDisabledTextColor(Color.BLACK);
         scroll = new JScrollPane(log);
         adc = new JCheckBox("ADC");
         led = new JCheckBox("Led");
+        pwm = new JCheckBox("Pwm");
+        echo = new JCheckBox("<~~");
 
-        solarVoltage = new JTextField(7);
         batteryVoltage = new JTextField(7);
+
+        //Sliders // magic numbers hello
+        speedSlider = new JSlider( JSlider.VERTICAL, 100, 200, 100);
+        lightSlider = new JSlider( JSlider.VERTICAL, 0, 250, 0);
+        //config it
+        speedSlider.setPaintLabels(true);
+        speedSlider.setMajorTickSpacing(10);
+        speedSlider.setSnapToTicks(true);
+        speedSlider.setEnabled(false);
+
+        lightSlider.setPaintLabels(true);
+        lightSlider.setMajorTickSpacing(25);
+        lightSlider.setSnapToTicks(true);
+        lightSlider.setEnabled(false);
+
 
     }
 
@@ -134,37 +135,33 @@ public class MainFrame extends JFrame {
         leftPanel.add(new JPanel(), BorderLayout.NORTH);
         leftPanel.add(scroll, BorderLayout.CENTER);
         leftPanel.add(bottomLeft, BorderLayout.SOUTH);
-        bottomLeft.add(straight);
-        bottomLeft.add(left);
-        bottomLeft.add(back);
-        bottomLeft.add(right);
-        bottomLeft.add(stop);
         bottomLeft.add(test);
+        bottomLeft.add(clearLog);
 
         //right
         rightPanel.setPreferredSize(new Dimension(getWidth() / 2 - 130, getHeight() - 80));
 
         c.fill = GridBagConstraints.HORIZONTAL;
-
-        c.gridx = 5;
-        c.gridy = 1;
-        rightPanel.add(solarVoltage, c);
-        solarVoltage.setEditable(false);
         c.gridx = 6;
+        c.gridy = 0;
         rightPanel.add(batteryVoltage, c);
+        c.gridx = 5;
+        rightPanel.add(adc, c);
+        c.gridy = 1;
+        rightPanel.add(echo, c);
+        c.gridx = 6;
+        rightPanel.add(echoRange, c);
         batteryVoltage.setEditable(false);
         // rightPanel.add(adc, c);
         c.gridx = 6;
         c.gridy = 2;
-        // rightPanel.add(led, c);
-        rightPanel.add(adc, c);
+        rightPanel.add(pwm, c);
         c.gridx = 5;
-        rightPanel.add(ledPlus, c);
-
-        c.gridx = 5;
+        rightPanel.add(led, c);
         c.gridy = 3;
-        rightPanel.add(clearLog, c);
-   
+        rightPanel.add(lightSlider, c);
+        c.gridx = 6;
+        rightPanel.add(speedSlider, c);
         //combo
         comboBoxConfig();
 
@@ -193,6 +190,10 @@ public class MainFrame extends JFrame {
 
         parity.addItem(SerialPort.PARITY_NONE);
         parity.addItem(SerialPort.PARITY_ODD);
+        for (int i = 5; i!=11; i++){
+            echoRange.addItem(i);
+        }
+
 
 //</editor-fold>
     }

@@ -17,6 +17,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.Optional;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -84,112 +85,58 @@ public class GuiController {
 
     private void addControlListeners(){
         mainFrame.getAdc().addItemListener(new AdcBoxListener());
-        mainFrame.getLed().addItemListener(new LedBoxListener());
-        mainFrame.getStraight().addActionListener(new ControlButtonListener(mainFrame.getStraight()));
-        mainFrame.getBack().addActionListener(new ControlButtonListener(mainFrame.getBack()));
-        mainFrame.getLeft().addActionListener(new ControlButtonListener(mainFrame.getLeft()));
-        mainFrame.getRight().addActionListener(new ControlButtonListener(mainFrame.getRight()));
-        mainFrame.getStop().addActionListener(new ControlButtonListener(mainFrame.getStop()));
+        mainFrame.getLed().addItemListener((ItemEvent e) -> {
+            if(e.getStateChange() == ItemEvent.SELECTED){
+                mainFrame.getLightSlider().setEnabled(true);
+            }
+            if(e.getStateChange() == ItemEvent.DESELECTED){
+                mainFrame.getLightSlider().setEnabled(false);
+            }
+        });
+        mainFrame.getPwm().addItemListener((ItemEvent e) -> {
+            if(e.getStateChange() == ItemEvent.SELECTED){
+                mainFrame.getSpeedSlider().setEnabled(true);
+            }
+            if(e.getStateChange() == ItemEvent.DESELECTED){
+                mainFrame.getSpeedSlider().setEnabled(false);
+            }
+        });
         mainFrame.getClearLog().addActionListener(new ControlButtonListener(mainFrame.getClearLog()));
-        mainFrame.getLedPlus().addActionListener(new ControlButtonListener(mainFrame.getLedPlus()));
         mainFrame.getTest().addKeyListener(new ActionKeysListener());
     }
 
 // Key interpretator
 
-    private void buttonHunter(String button) {
-
-        switch (button) {
-            case "W":
-                mainFrame.getStraight().doClick(time);
-                if (getCommandOFF().equals("WW")) {
-                    setCommandOFF("");
-                }
-                break;
-            case "D":
-                mainFrame.getRight().doClick(time);
-
-                if (getCommandOFF().equals("DD")) {
-                    setCommandOFF("");
-                }
-                break;
-            case "A":
-                mainFrame.getLeft().doClick(time);
-                if (getCommandOFF().equals("AA")) {
-                    setCommandOFF("");
-                }
-                break;
-            case "S":
-                mainFrame.getBack().doClick(time);
-                if (getCommandOFF().equals("SS")) {
-                    setCommandOFF("");
-                }
-                break;
-            case "C":
-                mainFrame.getStop().doClick(time);
-
-                break;
-            case "WW":
-                mainFrame.getStop().doClick(time);
-                if (getCommandON().equals("W")) {
-                    setCommandON("");
-                }
-                break;
-            case "AA":
-                mainFrame.getStop().doClick(time);
-                if (getCommandON().equals("A")) {
-                    setCommandON("");
-                }
-                break;
-            case "DD":
-                mainFrame.getStop().doClick(time);
-                if (getCommandON().equals("D")) {
-                    setCommandON("");
-                }
-                break;
-            case "SS":
-                mainFrame.getStop().doClick(time);
-                if (getCommandON().equals("S")) {
-                    setCommandON("");
-                }
-                break;
-
-        }
-
-    }
 
     ////Keyboard
     private class ActionKeysListener extends KeyAdapter {
-
-        String commandON;
-        String commandOFF;
+       Optional<KeyBoardAction> optionalAction;
+        String activeReleasedKey = null;
+        String activePressedKey = null;
 
         @Override
         public void keyPressed(KeyEvent e) {
-            commandON = e.getKeyText(e.getKeyCode());
-
-            if (!commandON.equals(getCommandON())) {
-                if ((getCommandON().equals("W"))
-                        && (commandON.equals("A")
-                        || commandON.equals("D"))) {
-                    switchCommand=true;
-                }else switchCommand=false;
-                setCommandON(commandON);
-                buttonHunter(commandON);
+            String pressedKey = e.getKeyText(e.getKeyCode());
+            if(!pressedKey.equals(activePressedKey)){
+                System.out.print(pressedKey);
+                activePressedKey = pressedKey;
+                optionalAction = KeyBoardAction.findActionByButton(activePressedKey);
+                if(optionalAction.isPresent()){
+                    optionalAction.get().setActive(true);
+                    serialPortController.write(String.valueOf(KeyBoardAction.getSumOfActiveActions()));
+                }
             }
-
         }
 
         @Override
         public void keyReleased(KeyEvent e) {
-            commandOFF = e.getKeyText(e.getKeyCode()) + e.getKeyText(e.getKeyCode());
-            if (!commandOFF.equals(getCommandOFF())) {
-                if(switchCommand&&(commandOFF.equals("AA")||commandOFF.equals("DD"))){
-                    setCommandON("W");
-                buttonHunter("W");
-                }else{
-                setCommandOFF(commandOFF);
-                buttonHunter(commandOFF);
+            String releasedKey = e.getKeyText(e.getKeyCode());
+            if(!releasedKey.equals(activeReleasedKey)){
+                activeReleasedKey = releasedKey;
+                optionalAction = KeyBoardAction.findActionByButton(activeReleasedKey);
+                if(optionalAction.isPresent()){
+                    optionalAction.get().setActive(false);
+                 serialPortController.write(String.valueOf(KeyBoardAction.getSumOfActiveActions()));
                 }
             }
         }
@@ -215,35 +162,11 @@ public class GuiController {
                 case "Clear":
                     logger.clearLog();
                     break;
-                case "Led+":
-                    serialPortController.write("L");
-                    break;
-                //case "Ctrl":
-                // serialPortController.write("C");
-                // break;
-                default:
-                    serialPortController.write(button.getText());
-                    break;
             }
-
         }
-
     }
 
     //Check Box - Led, Mode, 2x - LIstners
-    private class LedBoxListener implements ItemListener {
-
-        @Override
-        public void itemStateChanged(ItemEvent e) {
-
-            if ((e.getStateChange() == ItemEvent.SELECTED) | (e.getStateChange() == ItemEvent.DESELECTED)) {
-
-                serialPortController.write("L");
-            }
-
-        }
-
-    }
 
     private class AdcBoxListener implements ItemListener {
 

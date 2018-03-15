@@ -229,7 +229,7 @@ BOOST_PYTHON_MODULE(RF24){
         .value("BCM2835_SPI_CS_NONE", BCM2835_SPI_CS_NONE)
         .export_values();
 
-// exposing '#define's for SPI speed as this is needed for RF24 constructor
+// exposing '#define's for SPI speedSlider as this is needed for RF24 constructor
     bp::scope().attr("BCM2835_SPI_SPEED_64MHZ") = BCM2835_SPI_SPEED_64MHZ;
     bp::scope().attr("BCM2835_SPI_SPEED_32MHZ") = BCM2835_SPI_SPEED_32MHZ;
     bp::scope().attr("BCM2835_SPI_SPEED_16MHZ") = BCM2835_SPI_SPEED_16MHZ;
@@ -305,7 +305,7 @@ BOOST_PYTHON_MODULE(RF24){
         .def("setAutoAck", (void ( ::RF24::* )( ::uint8_t,bool ) )( &::RF24::setAutoAck ), ( bp::arg("pipe"), bp::arg("enable") ) )    
         .def("setCRCLength", &RF24::setCRCLength, ( bp::arg("length") ) )    
         .def("setChannel", &RF24::setChannel, ( bp::arg("channel") ) )    
-        .def("setDataRate", &RF24::setDataRate, ( bp::arg("speed") ) )    
+        .def("setDataRate", &RF24::setDataRate, ( bp::arg("speedSlider") ) )
         .def("setPALevel", &RF24::setPALevel, ( bp::arg("level") ) )    
         .def("setRetries", &RF24::setRetries , (bp::arg("delay"), bp::arg("count")))    
         .def("startFastWrite", &startFastWrite_wrap1, ( bp::arg("buf"), bp::arg("len"), bp::arg("multicast") ) )    

@@ -15,7 +15,7 @@ import org.springframework.context.annotation.Configuration;
 public class MainClass {
     public static void main (String[] args){
 
-        ConfigurableApplicationContext context = new SpringApplicationBuilder(MainClass.class).headless(false).run(args);
+        new SpringApplicationBuilder(MainClass.class).headless(false).run(args);
 
     }
     

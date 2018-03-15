@@ -118,7 +118,7 @@ public:
   *
   * @param _cepin The pin attached to Chip Enable on the RF module
   * @param _cspin The pin attached to Chip Select
-  * @param spispeed For RPi, the SPI speed in MHZ ie: BCM2835_SPI_SPEED_8MHZ
+  * @param spispeed For RPi, the SPI speedSlider in MHZ ie: BCM2835_SPI_SPEED_8MHZ
   */
   
   RF24(uint16_t _cepin, uint16_t _cspin, uint32_t spispeed );
@@ -868,10 +868,10 @@ s   *
    *
    * @warning setting RF24_250KBPS will fail for non-plus units
    *
-   * @param speed RF24_250KBPS for 250kbs, RF24_1MBPS for 1Mbps, or RF24_2MBPS for 2Mbps
+   * @param speedSlider RF24_250KBPS for 250kbs, RF24_1MBPS for 1Mbps, or RF24_2MBPS for 2Mbps
    * @return true if the change was successful
    */
-  bool setDataRate(rf24_datarate_e speed);
+  bool setDataRate(rf24_datarate_e speedSlider);
 
   /**
    * Fetches the transmission data rate
@@ -939,7 +939,7 @@ s   *
   * 
   * On all devices but Linux and ATTiny, a small delay is added to the CSN toggling function
   * 
-  * This is intended to minimise the speed of SPI polling due to radio commands
+  * This is intended to minimise the speedSlider of SPI polling due to radio commands
   *
   * If using interrupts or timed requests, this can be set to 0 Default:5
   */
@@ -1011,7 +1011,7 @@ private:
    * Set chip select pin
    *
    * Running SPI bus at PI_CLOCK_DIV2 so we don't waste time transferring data
-   * and best of all, we make use of the radio's FIFO buffers. A lower speed
+   * and best of all, we make use of the radio's FIFO buffers. A lower speedSlider
    * means we're less likely to effectively leverage our FIFOs and pay a higher
    * AVR runtime cost as toll.
    *

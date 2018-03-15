@@ -60,12 +60,10 @@ public class SerialPortController {
                 logger.ERROR(" Port has not created ");
             }
         }
-
         return port;
     }
 
     public synchronized void write(String data) {
-
         try {
             mainPort.writeBytes(data.getBytes());
             logger.INFO(data + " sent");
@@ -73,7 +71,6 @@ public class SerialPortController {
         } catch (NullPointerException|SerialPortException ex) {
             logger.ERROR(data + " Did not send, some exception");
         }
-
     }
 
     // request - data request

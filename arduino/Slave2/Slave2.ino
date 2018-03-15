@@ -14,7 +14,7 @@ BimoControl bimo(m1,m2);
 //NRF24
 RF24 radio(A0, A1);
 char data[32];
-char d ;
+int d ;
 //ECHO
 int trigPin = A3;
 int echoPin = A2;
@@ -96,13 +96,13 @@ void sendADC() {
 void interpretator() {
 
   switch (d) {
-    case 'W':  if(distance>5){ bimo.setMotorPWM(150,150); bimo.goStraight(); }
+    case '1':  if(distance>5){ bimo.setMotorPWM(150,150); bimo.goStraight(); }
       break;
-    case 'S':  bimo.setMotorPWM(130,130); bimo.goBack();
+    case '2':  bimo.setMotorPWM(130,130); bimo.goBack();
       break;
-    case 'A':  bimo.setMotorPWM(130,130); bimo.goRight();
+    case '3':  bimo.setMotorPWM(130,130); bimo.goLeft();
       break;
-    case 'D':  bimo.setMotorPWM(130,130); bimo.goLeft();
+    case '4':  bimo.setMotorPWM(130,130); bimo.goRight();
       break;
     case 'L': if (led1Mode == 5) {
         led1Mode = -1;
