@@ -21,7 +21,8 @@ import java.util.Optional;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import javax.swing.JButton;
+import javax.swing.*;
+import javax.swing.event.ChangeEvent;
 
 @Component
 public class GuiController {
@@ -85,28 +86,75 @@ public class GuiController {
 
     private void addControlListeners(){
         mainFrame.getAdc().addItemListener(new AdcBoxListener());
+
         mainFrame.getLed().addItemListener((ItemEvent e) -> {
             if(e.getStateChange() == ItemEvent.SELECTED){
+                getValueFromSliderAndWriteItToSerial(PropertyAction.LIGHT, mainFrame.getLightSlider());
                 mainFrame.getLightSlider().setEnabled(true);
             }
             if(e.getStateChange() == ItemEvent.DESELECTED){
                 mainFrame.getLightSlider().setEnabled(false);
+                serialPortController.write(PropertyAction.jsonValue(PropertyAction.LIGHT, 0));
             }
         });
+
         mainFrame.getPwm().addItemListener((ItemEvent e) -> {
             if(e.getStateChange() == ItemEvent.SELECTED){
+                getValueFromSliderAndWriteItToSerial(PropertyAction.SPEED, mainFrame.getSpeedSlider());
                 mainFrame.getSpeedSlider().setEnabled(true);
             }
             if(e.getStateChange() == ItemEvent.DESELECTED){
                 mainFrame.getSpeedSlider().setEnabled(false);
+                serialPortController.write(PropertyAction.jsonValue(PropertyAction.SPEED, 0));
             }
         });
+
+        mainFrame.getEcho().addItemListener((ItemEvent e) -> {
+            if(e.getStateChange() == ItemEvent.SELECTED){
+                serialPortController.write(PropertyAction.jsonValue(PropertyAction.ECHO,
+                        mainFrame.getEcho().get));
+            }
+            if(e.getStateChange() == ItemEvent.DESELECTED){
+                serialPortController.write(PropertyAction.jsonValue(PropertyAction.ECHO, 0));
+            }
+        });
+
+        mainFrame.getAdc().addItemListener((ItemEvent e) -> {
+            if(e.getStateChange() == ItemEvent.SELECTED){
+                serialPortController.write(PropertyAction.jsonValue(PropertyAction.VOLTAGE, 1));
+            }
+            if(e.getStateChange() == ItemEvent.DESELECTED){
+                serialPortController.write(PropertyAction.jsonValue(PropertyAction.VOLTAGE, 0));
+            }
+        });
+
+
+
+
+
         mainFrame.getClearLog().addActionListener(new ControlButtonListener(mainFrame.getClearLog()));
+
         mainFrame.getTest().addKeyListener(new ActionKeysListener());
+
+        mainFrame.getLightSlider().addChangeListener((ChangeEvent e) -> {
+            JSlider source = (JSlider)e.getSource();
+            if (!source.getValueIsAdjusting()) {
+                getValueFromSliderAndWriteItToSerial(PropertyAction.LIGHT, source);
+            }
+        });
+
+        mainFrame.getSpeedSlider().addChangeListener((ChangeEvent e) -> {
+            JSlider source = (JSlider)e.getSource();
+            if (!source.getValueIsAdjusting()) {
+                getValueFromSliderAndWriteItToSerial(PropertyAction.SPEED, source);
+            }
+        });
+
     }
 
-// Key interpretator
-
+   private void getValueFromSliderAndWriteItToSerial(PropertyAction action, JSlider slider){
+       serialPortController.write(PropertyAction.jsonValue(action, slider.getValue()));
+   }
 
     ////Keyboard
     private class ActionKeysListener extends KeyAdapter {
@@ -175,7 +223,7 @@ public class GuiController {
 
             if ((e.getStateChange() == ItemEvent.SELECTED)) {
                 t1 = new Timer();
-                t1.schedule(adcTask(), 3000, 3000);
+               // t1.schedule(adcTask(), 3000, 3000);
 
             }
 
@@ -189,36 +237,5 @@ public class GuiController {
 
     }
 
-    private TimerTask adcTask() {
-
-        TimerTask tt1;
-        tt1 = new TimerTask() {
-
-            @Override
-            public void run() {
-                //  read(); command
-
-                serialPortController.writeRequest("G");
-            }
-        };
-        return tt1;
-
-    }
-
-    public String getCommandON() {
-        return commandON;
-    }
-
-    public void setCommandON(String commandON) {
-        this.commandON = commandON;
-    }
-
-    public String getCommandOFF() {
-        return commandOFF;
-    }
-
-    public void setCommandOFF(String commandOFF) {
-        this.commandOFF = commandOFF;
-    }
 
 }
