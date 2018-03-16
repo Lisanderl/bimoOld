@@ -1,4 +1,5 @@
- #include <BimoControl.h>
+
+#include <BimoControl.h>
 #include <nRF24L01.h>
 #include <printf.h>
 #include <RF24.h>
@@ -64,8 +65,6 @@ distanceReaction();
   bimo.stopMove();
  } 
 }
-
-
 
 void sendADC() {
   int sizeADC;
@@ -158,27 +157,23 @@ void configs() {
 
 void nrfSetup() {
   bool master = false;
+  
   byte addr1[] = {0xC2, 0xC2, 0xC2, 0xC2, 0xC2};
   byte addr2[] = {0xE7, 0xE7, 0xE7, 0xE7, 0xE7};
+  
   radio.begin();
-  radio.txDelay = 160;
+  radio.txDelay = 135;
   radio.enableDynamicPayloads();
   radio.setCRCLength( RF24_CRC_16 ) ;
   radio.setChannel(4);  // Channel number - 0-125
   radio.setDataRate(RF24_1MBPS);
-  radio.setPALevel(2);
-  radio.setRetries(5, 5); // 1 - delay, 2 - amount
+  radio.setPALevel(3);
+  radio.setRetries(1, 3); // 1 - delay, 2 - amount
   radio.setAutoAck( true ) ;
-  if (master)
-  {
-    radio.openWritingPipe(addr2);
-    radio.openReadingPipe(1, addr1);
-  }
-  else
-  {
+
     radio.openWritingPipe(addr1);
     radio.openReadingPipe(1, addr2);
-  } ;
+ 
   radio.powerUp();
   bimo.blinc(100);
   radio.startListening();

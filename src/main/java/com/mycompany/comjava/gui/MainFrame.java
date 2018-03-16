@@ -29,7 +29,7 @@ public class MainFrame extends JFrame {
 
     private JLabel configL, speedL, bitsL, stopBitsL;
     private JPanel mainPanel, topPanel, bottomPanel, leftPanel, rightPanel, bottomLeft;
-    private JButton  test, refresh, clearLog;
+    private JButton  test, refresh, clearLog, verify;
     private JCheckBox led, adc, pwm, echo;
     private JTextArea log;
     private JScrollPane scroll;
@@ -66,6 +66,7 @@ public class MainFrame extends JFrame {
         test = new JButton("Control with keyboard");
         refresh = new JButton("Ref");
         clearLog = new JButton("Clear");
+        verify = new JButton("Verify");
         //comboboxes...
         COMPort = new JComboBox<>();
         portSpeed = new JComboBox<>();
@@ -137,6 +138,7 @@ public class MainFrame extends JFrame {
         leftPanel.add(bottomLeft, BorderLayout.SOUTH);
         bottomLeft.add(test);
         bottomLeft.add(clearLog);
+        bottomLeft.add(verify);
 
         //right
         rightPanel.setPreferredSize(new Dimension(getWidth() / 2 - 130, getHeight() - 80));

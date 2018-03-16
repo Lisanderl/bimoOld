@@ -85,7 +85,6 @@ public class GuiController {
     }
 
     private void addControlListeners(){
-        mainFrame.getAdc().addItemListener(new AdcBoxListener());
 
         mainFrame.getLed().addItemListener((ItemEvent e) -> {
             if(e.getStateChange() == ItemEvent.SELECTED){
@@ -105,14 +104,13 @@ public class GuiController {
             }
             if(e.getStateChange() == ItemEvent.DESELECTED){
                 mainFrame.getSpeedSlider().setEnabled(false);
-                serialPortController.write(PropertyAction.jsonValue(PropertyAction.SPEED, 0));
             }
         });
 
         mainFrame.getEcho().addItemListener((ItemEvent e) -> {
             if(e.getStateChange() == ItemEvent.SELECTED){
-                serialPortController.write(PropertyAction.jsonValue(PropertyAction.ECHO,
-                        mainFrame.getEcho().get));
+                serialPortController.write(PropertyAction.jsonValue(PropertyAction.ECHO, (int)mainFrame.getEchoRange().getSelectedItem()));
+
             }
             if(e.getStateChange() == ItemEvent.DESELECTED){
                 serialPortController.write(PropertyAction.jsonValue(PropertyAction.ECHO, 0));
@@ -127,10 +125,6 @@ public class GuiController {
                 serialPortController.write(PropertyAction.jsonValue(PropertyAction.VOLTAGE, 0));
             }
         });
-
-
-
-
 
         mainFrame.getClearLog().addActionListener(new ControlButtonListener(mainFrame.getClearLog()));
 
@@ -193,9 +187,7 @@ public class GuiController {
 
 //Buttons
     private class ControlButtonListener implements ActionListener {
-
         JButton button;
-
         private ControlButtonListener(JButton button) {
             this.button = button;
         }
@@ -213,29 +205,5 @@ public class GuiController {
             }
         }
     }
-
-    //Check Box - Led, Mode, 2x - LIstners
-
-    private class AdcBoxListener implements ItemListener {
-
-        @Override
-        public void itemStateChanged(ItemEvent e) {
-
-            if ((e.getStateChange() == ItemEvent.SELECTED)) {
-                t1 = new Timer();
-               // t1.schedule(adcTask(), 3000, 3000);
-
-            }
-
-            if ((e.getStateChange() == ItemEvent.DESELECTED)) {
-                t1.cancel();
-                t1 = null;
-
-            }
-
-        }
-
-    }
-
 
 }
