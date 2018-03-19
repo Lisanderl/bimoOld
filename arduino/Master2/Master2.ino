@@ -10,43 +10,44 @@ float const ADC1V1 = 0.02275;
 float const ADC5V0 = 0.11556;
 float battaryVoltage = 0.0;
 int ledPin = 2;
-int counter = 0; 
+int counter = 0;
 
 void setup() {
   pinMode(4, OUTPUT); // test
   pinMode(ledPin, OUTPUT);
   Serial.begin(76800);
   nrfSetup();
-//  radio.write(serialData, 1);
+  //  radio.write(serialData, 1);
   radio.startListening();
-  
+
 }
 void loop() {
-  while(true){
-  if (radio.available()) {
-    char len = radio.getDynamicPayloadSize();
-//    radio.read(data1, len);
-   // Serial.println(data1);
- //  if(counter==1){
-//    battaryVoltage = (float) atoi(data1)*ADC1V1;
- //  }else{
-//    solarVoltage = (float) atoi(data1)*ADC1V1;
-//   counter=0;
-   }
+ 
+    if (radio.available()) {
+      int len = radio.getDynamicPayloadSize();
+      char recivedData[len]; 
+      radio.read(recivedData, len);
+
+    
   }
 }
 
 void serialEvent() {
   char serialData[32];
-  int i = 0;
+  String data = "";
   radio.stopListening();
- while(Serial.available()){
-  serialData[i] = Serial.read();
-  i++;
- }
- bool requestStatus = radio.write(serialData, sizeof(serialData));
- delay(1); 
-Serial.print(jsonParser("WriteToSlave", (String)requestStatus));
+  while (Serial.available()) {
+    data += (char)Serial.read();
+  }
+
+  int len = data.length() + 1;
+  char strArray(len);
+  data.toCharArray(strArray, len);
+  strcpy(serialData, data.c_str());
+  delay(1);
+  bool requestStatus = radio.write(serialData, sizeof(serialData));
+  delay(1);
+  Serial.print(jsonParser("WriteToSlave", (String)requestStatus));
 }
 
 void blinc(int ms) {
@@ -63,7 +64,7 @@ void nrfSetup() {
   bool master = true;
   byte addr1[] = {0xC2, 0xC2, 0xC2, 0xC2, 0xC2};
   byte addr2[] = {0xE7, 0xE7, 0xE7, 0xE7, 0xE7};
-  
+
   radio.begin();
   radio.txDelay = 135;
   radio.enableDynamicPayloads();
@@ -73,8 +74,8 @@ void nrfSetup() {
   radio.setPALevel(2);
   radio.setRetries(1, 3); // 1 - delay, 2 - amount
   radio.setAutoAck( true ) ;
-    radio.openWritingPipe(addr2);
-    radio.openReadingPipe(1, addr1);
+  radio.openWritingPipe(addr2);
+  radio.openReadingPipe(1, addr1);
   radio.powerUp();
   blinc(100);
   radio.startListening();
@@ -82,8 +83,8 @@ void nrfSetup() {
   radio.stopListening();
 }
 
-String jsonParser(String name, String value){
-  return "{\""+name+"\":"+value+"}";
+String jsonParser(String name, String value) {
+  return "{\"" + name + "\":" + value + "}";
 }
 
 

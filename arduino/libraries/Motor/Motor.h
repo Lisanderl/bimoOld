@@ -6,6 +6,7 @@ class Motor {
 public:
  Motor(int PWM, int positive, int negative);
  void setPWM(int pwm);
+ int getPWM();
  void on();
  void off();
  void reverse();

@@ -9,10 +9,7 @@
 
 #define CONTROLS (d=='W'||d=='S'||d=='A'||d=='D'||d=='C'||d=='L')
 
-//motors control
-Motor m1(10, 4, 3);
-Motor m2(9, 7, 8);
-BimoControl bimo(m1, m2);
+
 //NRF24
 RF24 radio(A0, A1);
 char data[32];
@@ -22,6 +19,10 @@ int trigPin = A3;
 int echoPin = A2;
 Ultrasonic ultrasonic(trigPin, echoPin);
 int distance = 5;
+//motors control
+Motor m1(10, 4, 3);
+Motor m2(9, 7, 8);
+BimoControl bimo(m1, m2, ultrasonic);
 //led/tone control
 int ledPin = 2;// for tests
 int led1Pin = 5;
@@ -129,7 +130,7 @@ void interpretator() {
       break;
     case '202': if (led1Mode == 5) {
         led1Mode = -1;
-      } bimo.ledON(led1Pin, ++led1Mode);
+      } 
       break;
     default : bimo.setMotorPWM(0, 0); bimo.stopMove();
   }
@@ -166,7 +167,7 @@ void configs() {
   tone(tonePin, random(10, 800), 100);
   delay(30);
   bimo.blinc(10);
-  bimo.ledON(led1Pin, 1);
+  bimo.ledON(led1Pin);
   sendADC();
   bimo.blinc(30);
   tone(tonePin, random(10, 800), 100);
@@ -174,9 +175,9 @@ void configs() {
   tone(tonePin, random(10, 800), 100);
   delay(30);
   tone(tonePin, random(10, 800), 100);
-  bimo.ledON(led1Pin, 5);
+  bimo.ledON(led1Pin);
   delay(30);
-  bimo.ledON(led1Pin, 0);
+  bimo.ledON(led1Pin);
 }
 
 void nrfSetup() {

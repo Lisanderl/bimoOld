@@ -21,6 +21,11 @@ void Motor::setPWM(int pwmValue) //: m_pwmValue(pwmValue)
   //analogWrite(m1PWM, m1);
 }
 
+ int Motor::    getPWM()
+ {
+  return m_pwmValue;
+ }
+
 void Motor::on() {
   analogWrite(m_PWM, m_pwmValue);
   digitalWrite(m_Positive, HIGH);

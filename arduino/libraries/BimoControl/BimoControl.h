@@ -2,31 +2,33 @@
 #define BimoControl_h // тогда подключаем ее
 #include "Arduino.h"
 #include "Motor.h"
+#include <Ultrasonic.h>
 class BimoControl {
 	
 public:
-
-BimoControl(Motor m1, Motor m2);
+BimoControl(Motor m1, Motor m2, Ultrasonic ultrasonic);
 void setMotorPWM(int pwm1, int pwm2);
+void setLedPWM(int val);
 void goStraight();
 void goBack();
 void goRight();
 void goLeft();
 void stopMove();
-//pls, if You use this functins, You should use HIGH pwm value (200 and more);
+//pls, if You use this functions, You should use HIGH pwm value (200 and more);
 void goRightEasy();
 void goLeftEasy();
 //
 void setBlincPin(int m_ledPin);
 void blinc(int ms);
 //pls use only analog pins, mode 0-5 = 0-100 % brightness
-void ledON(int pin, int mode);
+void ledON(int pin);
 
 private:
 Motor m_m1;
 Motor m_m2;
+Ultrasonic m_ultrasonic;
 int m_ledPin;
-int ledOutConst = 51;
+int ledPmwValue;
 };
 
 #endif
