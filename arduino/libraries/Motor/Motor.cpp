@@ -21,7 +21,7 @@ void Motor::setPWM(int pwmValue) //: m_pwmValue(pwmValue)
   //analogWrite(m1PWM, m1);
 }
 
- int Motor::    getPWM()
+ int Motor::getPWM()
  {
   return m_pwmValue;
  }

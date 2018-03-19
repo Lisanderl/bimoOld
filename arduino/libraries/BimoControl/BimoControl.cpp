@@ -22,9 +22,15 @@ void BimoControl::setLedPWM(int val){
 }
 
 void BimoControl::goStraight(){
+    if(m_m1.getPWM()>m_m2.getPWM()){
+       m_m2.setPWM(m_m1.getPWM());
+    } else if(m_m1.getPWM()<m_m2.getPWM()){
+       m_m1.setPWM(m_m2.getPWM());
+    } //reset default values
 	m_m1.on();
 	m_m2.on();	
 }
+
 void BimoControl::goBack(){
 	m_m1.reverse();
 	m_m2.reverse();
@@ -34,8 +40,9 @@ void BimoControl::goRight(){
 	m_m1.reverse();	
 }
 void BimoControl::goRightEasy(){
-	
-	m_m1.reverse();	
+    m_m1.setPWM(m_m1.getPWM()/3);
+	m_m1.on();
+    m_m2.on();
 }
 void BimoControl::goLeft(){
 	m_m2.reverse();	
@@ -43,8 +50,9 @@ void BimoControl::goLeft(){
 }
 
 void BimoControl::goLeftEasy(){
-	m_m2.reverse();	
-	
+    m_m2.setPWM(m_m1.getPWM()/3);
+	m_m1.on();
+    m_m2.on();
 }
 
 void BimoControl::stopMove(){
