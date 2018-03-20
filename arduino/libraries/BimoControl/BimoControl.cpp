@@ -22,11 +22,7 @@ void BimoControl::setLedPWM(int val){
 }
 
 void BimoControl::goStraight(){
-    if(m_m1.getPWM()>m_m2.getPWM()){
-       m_m2.setPWM(m_m1.getPWM());
-    } else if(m_m1.getPWM()<m_m2.getPWM()){
-       m_m1.setPWM(m_m2.getPWM());
-    } //reset default values
+    (m_m1.getPWM()>m_m2.getPWM()) ?  m_m2.setPWM(m_m1.getPWM()) :  m_m1.setPWM(m_m2.getPWM());
 	m_m1.on();
 	m_m2.on();	
 }

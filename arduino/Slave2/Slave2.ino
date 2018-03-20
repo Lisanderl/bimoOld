@@ -1,5 +1,6 @@
 #include <ArduinoJson.h>
 #include <BimoControl.h>
+#include <BimoSettings.h>
 #include <nRF24L01.h>
 #include <printf.h>
 #include <RF24.h>
@@ -31,12 +32,14 @@ int tonePin = A5;
 unsigned int led1Mode = 0;
 DynamicJsonBuffer jsonBuffer(128);
 
+long connectionFlag = 0;
+bool connection;
 void setup() {
   configs();
 }
 
 void loop() {
-  while(true){
+  //TO DO: add connection flag
   distanceReaction();
 
   if (radio.available()) {
@@ -68,7 +71,6 @@ void loop() {
     bimo.stopMove();
   }
 }
-}
 void parseDataFromRadio() {
   char requestData[32];
   if (radio.available()) {
@@ -77,32 +79,17 @@ void parseDataFromRadio() {
     JsonObject& root = jsonBuffer.parseObject(requestData);
   }
 }
-//TO DO: creat default values of adjustments like pwm and adc...
-void sendADC() {
-  int sizeADC;
-  int i;
-  char str[4];
-  radio.stopListening();
-  i = analogRead(7);
-  itoa(i, str, 10);
-  if (i < 1000) {
-    sizeADC = 3;
-  } else {
-    sizeADC = 4;
-  }
-  radio.write(str, sizeADC);
-  i = analogRead(6);
-  itoa(i, str, 10);
-  if (i < 1000) {
-    sizeADC = 3;
-  } else {
-    sizeADC = 4;
-  }
-  radio.write(str, sizeADC);
-  radio.startListening();
-  delay(1);
-}
 
+void connectionController() {
+  connectionFlag++;
+  if (connectionFlag == 10000000) {
+    //send request
+  }
+  if (connectionFlag == 15000000) {
+     connectionFlag=0;
+  }
+
+}
 
 void interpretator() {
 
@@ -130,7 +117,7 @@ void interpretator() {
       break;
     case '202': if (led1Mode == 5) {
         led1Mode = -1;
-      } 
+      }
       break;
     default : bimo.setMotorPWM(0, 0); bimo.stopMove();
   }
@@ -168,7 +155,6 @@ void configs() {
   delay(30);
   bimo.blinc(10);
   bimo.ledON(led1Pin);
-  sendADC();
   bimo.blinc(30);
   tone(tonePin, random(10, 800), 100);
   delay(30);

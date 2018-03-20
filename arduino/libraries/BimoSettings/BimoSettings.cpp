@@ -4,58 +4,65 @@
 #include <Ultrasonic.h>
 using namespace std;
 
-BimoSettings::BimoSettings()
-{
-
-void BimoSettings::setLeftMotorPWM(int val){
-
+BimoSettings::BimoSettings(){
 }
 
-
 void BimoSettings::setLeftMotorPWM(int val){
- this.leftMotorPWM=val;
+ leftMotorPWM=val;
 }
+
 void BimoSettings::setRightMotorPWM(int val){
- this.rightMotorPWM=val;
+ rightMotorPWM=val;
 }
+
 void BimoSettings::setLightPWM(int val){
-this.lightPWM=val;
+lightPWM=val;
 }
+
 void BimoSettings::setEchoDistance(int val){
-this.echoDistance=val;
+echoDistance=val;
 }
+
 void BimoSettings::setSendVoltage(bool val){
-this.sendVoltage=val;
+sendVoltage=val;
 }
+
 void BimoSettings::setEchoActive(bool val){
-this.echoActive=val;
+echoActive=val;
 }
+
 void BimoSettings::setLightTurnedOn(bool val){
-this.lightTurnedOn=val;
+lightTurnedOn=val;
 }
 
-int getLeftMotorPWM(){
-return this.leftMotorPWM;
-}
-int getRightMotorPWM(){
-return this.rightMotorPWM;
-}
-int getLightPWM(){
-return this.lightPWM;
-}
-int getEchoDistance(){
-return this.echoDistance;
-}
-bool isSendVoltage(){
-return this.sendVoltage;
-}
-bool isEchoActive(){
-return this.echoActive;
-}
-bool isLightTurnedOn(){
-return this.lightTurnedOn;
+int BimoSettings::getLeftMotorPWM(){
+return leftMotorPWM;
 }
 
-}	
+int BimoSettings::getRightMotorPWM(){
+return rightMotorPWM;
+}
+
+int BimoSettings::getLightPWM(){
+return lightPWM;
+}
+
+int BimoSettings::getEchoDistance(){
+return echoDistance;
+}
+
+bool BimoSettings::isSendVoltage(){
+return sendVoltage;
+}
+
+bool BimoSettings::isEchoActive(){
+return echoActive;
+}
+
+bool BimoSettings::isLightTurnedOn(){
+return lightTurnedOn;
+}
+
+
 
 
