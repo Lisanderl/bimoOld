@@ -6,6 +6,8 @@ using namespace std;
 BimoSettings::BimoSettings(){
 }
 
+
+
 void BimoSettings::setLeftMotorPWM(int val){
  leftMotorPWM=val;
 }

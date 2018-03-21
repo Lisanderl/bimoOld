@@ -1,4 +1,3 @@
-#include <ArduinoJson.h>
 #include <BimoControl.h>
 #include <BimoSettings.h>
 #include <nRF24L01.h>
@@ -7,9 +6,6 @@
 #include <RF24_config.h>
 #include <SPI.h>
 #include <Ultrasonic.h>
-
-#define CONTROLS (d=='W'||d=='S'||d=='A'||d=='D'||d=='C'||d=='L')
-
 
 //NRF24
 RF24 radio(A0, A1);
@@ -30,7 +26,6 @@ int led1Pin = 5;
 int led2Pin = 6;
 int tonePin = A5;
 unsigned int led1Mode = 0;
-DynamicJsonBuffer jsonBuffer(128);
 
 long connectionFlag = 0;
 bool connection;
@@ -45,18 +40,7 @@ void loop() {
     bimo.blinc(5);
     char len = radio.getDynamicPayloadSize();
     radio.read(data, len);
-    d = data[0];
-    if (CONTROLS) {
-      bimo.blinc(5);
-      interpretator();
-    } else if (d == 'G') {
-      char str[4];
-      int i = analogRead(7);
-      bimo.blinc(5);
-      //sendADC();
-      itoa(i, str, 10);
-      dataSendWrapper('d', str, 4);
-    }
+
   }
 
   if (distance < 6) {
@@ -75,7 +59,7 @@ void parseDataFromRadio() {
   if (radio.available()) {
     int len = radio.getDynamicPayloadSize();
     radio.read(requestData, len);
-    JsonObject& root = jsonBuffer.parseObject(requestData);
+    
   }
 }
 
