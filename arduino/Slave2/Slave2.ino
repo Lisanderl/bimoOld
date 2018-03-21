@@ -45,11 +45,11 @@ void loop() {
   }
 
   if (distance < 6) {
-    bimo.setMotorPWM(70, 70); bimo.goBack();
+     bimo.goBack();
     delay(random(10, 150));
-    bimo.setMotorPWM(100, 100); bimo.goBack();
+    bimo.goBack();
     delay(random(10, 150));
-    bimo.setMotorPWM(130, 130); bimo.goBack();
+     bimo.goBack();
     delay(random(10, 100));
     tone(tonePin, 700, 50);
     bimo.stopMove();
@@ -79,15 +79,14 @@ void interpretator() {
 
   switch (d) {
     case '1':  if (distance > 5) {
-        bimo.setMotorPWM(150, 150);
         bimo.goStraight();
       }
       break;
-    case '2':  bimo.setMotorPWM(130, 130); bimo.goBack();
+    case '2':   bimo.goBack();
       break;
-    case '4':  bimo.setMotorPWM(130, 130); bimo.goLeft();
+    case '4':  bimo.goLeft();
       break;
-    case '7':  bimo.setMotorPWM(130, 130); bimo.goRight();
+    case '7':   bimo.goRight();
       break;
     case '5':  //set slowly right
       break;
@@ -103,7 +102,7 @@ void interpretator() {
         led1Mode = -1;
       }
       break;
-    default : bimo.setMotorPWM(0, 0); bimo.stopMove();
+    default :  bimo.stopMove();
   }
 }
 

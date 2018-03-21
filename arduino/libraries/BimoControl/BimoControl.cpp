@@ -13,41 +13,40 @@ BimoControl::BimoControl(Motor m1, Motor m2, Ultrasonic ultrasonic, BimoSettings
 
 }	
 
-void BimoControl::setMotorPWM(int pwm1, int pwm2){
-	m_m1.setPWM(pwm1);
-	m_m2.setPWM(pwm2);
-}
-
-void BimoControl::setLedPWM(int val){
-	ledPmwValue=val;
+void BimoControl::setMotorPWM(){
+	m_m1.setPWM(m_settings.getLeftMotorPWM());
+	m_m2.setPWM(m_settings.getRightMotorPWM());
 }
 
 void BimoControl::goStraight(){
-    (m_m1.getPWM()>m_m2.getPWM()) ?  m_m2.setPWM(m_m1.getPWM()) :  m_m1.setPWM(m_m2.getPWM());
+    setMotorPWM();
 	m_m1.on();
 	m_m2.on();	
 }
 
 void BimoControl::goBack(){
+    setMotorPWM();
 	m_m1.reverse();
 	m_m2.reverse();
 }
 void BimoControl::goRight(){
+    setMotorPWM();
 	m_m2.on();
 	m_m1.reverse();	
 }
 void BimoControl::goRightEasy(){
-    m_m1.setPWM(m_m1.getPWM()/3);
+    m_m1.setPWM(m_settings.getLeftMotorPWM()/3);
 	m_m1.on();
     m_m2.on();
 }
 void BimoControl::goLeft(){
+    setMotorPWM();
 	m_m2.reverse();	
 	m_m1.on();	
 }
 
 void BimoControl::goLeftEasy(){
-    m_m2.setPWM(m_m1.getPWM()/3);
+    m_m2.setPWM(m_settings.getRightMotorPWM()/3);
 	m_m1.on();
     m_m2.on();
 }
@@ -55,6 +54,8 @@ void BimoControl::goLeftEasy(){
 void BimoControl::stopMove(){
 	m_m1.off();
 	m_m2.off();
+		m_m1.setPWM(0);
+    	m_m2.setPWM(0);
 }
 
 void BimoControl::blinc(int ms){
@@ -65,7 +66,7 @@ delay(ms);
 }
 	
 void BimoControl::ledON(int pin) {
-  analogWrite(pin, ledPmwValue);
+  analogWrite(pin, m_settings.getLightPWM());
 }
 
 void BimoControl::setBlincPin(int ledPin){

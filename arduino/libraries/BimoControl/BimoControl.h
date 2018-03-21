@@ -8,8 +8,7 @@ class BimoControl {
 	
 public:
 BimoControl(Motor m1, Motor m2, Ultrasonic ultrasonic, BimoSettings settings);
-void setMotorPWM(int pwm1, int pwm2);
-void setLedPWM(int val);
+void setMotorPWM();
 void goStraight();
 void goBack();
 void goRight();
@@ -30,7 +29,6 @@ Motor m_m2;
 Ultrasonic m_ultrasonic;
 BimoSettings m_settings;
 int m_ledPin;
-int ledPmwValue;
 };
 
 #endif
