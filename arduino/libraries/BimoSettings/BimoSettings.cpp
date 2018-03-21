@@ -1,7 +1,6 @@
-#include "Arduino.h"
-#include "BimoSettings.h"
-#include "Motor.h"
-#include <Ultrasonic.h>
+
+#include <BimoSettings.h>
+
 using namespace std;
 
 BimoSettings::BimoSettings(){

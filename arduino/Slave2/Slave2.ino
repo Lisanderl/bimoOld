@@ -39,8 +39,7 @@ void setup() {
 }
 
 void loop() {
-  //TO DO: add connection flag
-  distanceReaction();
+  //TO DO: add connection 
 
   if (radio.available()) {
     bimo.blinc(5);
@@ -133,11 +132,6 @@ void dataSendWrapper(char prefix, char data[], int masSize) {
   radio.write(message, masSize);
   delay(1);
   radio.startListening();
-}
-
-void distanceReaction() {
-  distance = (int) round(ultrasonic.Ranging(CM));
-
 }
 
 void configs() {

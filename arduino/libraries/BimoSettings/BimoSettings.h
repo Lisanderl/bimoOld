@@ -1,17 +1,16 @@
 #ifndef BimoSettings_h // если библиотека Button не подключена
 #define BimoSettings_h // тогда подключаем ее
 #include "Arduino.h"
-#include <Ultrasonic.h>
 class BimoSettings {
 	
 public:
 BimoSettings();
 
-String LIGHT = "L";
-String SPEED = "S";
-String ECHO = "E";
-String VOLTAGE = "Vgit";
-
+//String LIGHT = "L";
+//String SPEED = "S";
+//String ECHO = "E";
+//String VOLTAGE = "V";
+//
 
 void setLeftMotorPWM(int val);
 void setRightMotorPWM(int val);
