@@ -19,7 +19,8 @@ int distance = 5;
 //motors control
 Motor m1(10, 4, 3);
 Motor m2(9, 7, 8);
-BimoControl bimo(m1, m2, ultrasonic);
+BimoSettings settings;
+BimoControl bimo(m1, m2, ultrasonic, settings);
 //led/tone control
 int ledPin = 2;// for tests
 int led1Pin = 5;

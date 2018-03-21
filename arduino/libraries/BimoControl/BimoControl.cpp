@@ -2,10 +2,11 @@
 #include "BimoControl.h"
 #include "Motor.h"
 #include <Ultrasonic.h>
+#include <BimoSettings.h>
 using namespace std;
 
-BimoControl::BimoControl(Motor m1, Motor m2, Ultrasonic ultrasonic)
- :m_m1(m1), m_m2(m2), m_ultrasonic(ultrasonic)
+BimoControl::BimoControl(Motor m1, Motor m2, Ultrasonic ultrasonic, BimoSettings settings)
+ :m_m1(m1), m_m2(m2), m_ultrasonic(ultrasonic), m_settings(settings)
 {
 	//int m1pwm, int m11, int m12, int m2pwm, int m21, int m22
 //MashineControl(10, 4, 3, 9, 7, 8);

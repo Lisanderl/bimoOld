@@ -1,39 +1,47 @@
 
 #include <BimoSettings.h>
-
+#include <ArduinoJson.h>
 using namespace std;
 
 BimoSettings::BimoSettings(){
 }
 
+void BimoSettings::findAndGetDataFromArray(char* data){
+StaticJsonBuffer<16> jsonBuffer;
+JsonObject& root = jsonBuffer.parseObject(data);
 
-
-void BimoSettings::setLeftMotorPWM(int val){
- leftMotorPWM=val;
+if(root.containsKey(SPEED)){
+leftMotorPWM = root.get<int>(SPEED);
+rightMotorPWM = root.get<int>(SPEED);
+return;
 }
 
-void BimoSettings::setRightMotorPWM(int val){
- rightMotorPWM=val;
+if(root.containsKey(ECHO)){
+    if(root.is<bool>(ECHO)){
+       echoDistance = root.get<bool>(ECHO);
+    }
+
+    if(root.is<int>(ECHO)){
+       echoActive = root.get<int>(ECHO);
+    }
+return;
 }
 
-void BimoSettings::setLightPWM(int val){
-lightPWM=val;
+if(root.containsKey(LIGHT)){
+    if(root.is<bool>(LIGHT)){
+       lightTurnedOn = root.get<bool>(LIGHT);
+    }
+
+    if(root.is<int>(LIGHT)){
+       lightPWM = root.get<int>(LIGHT);
+    }
+return;
 }
 
-void BimoSettings::setEchoDistance(int val){
-echoDistance=val;
+if(root.containsKey(VOLTAGE)){
+sendVoltage = root.get<bool>(VOLTAGE);
 }
 
-void BimoSettings::setSendVoltage(bool val){
-sendVoltage=val;
-}
-
-void BimoSettings::setEchoActive(bool val){
-echoActive=val;
-}
-
-void BimoSettings::setLightTurnedOn(bool val){
-lightTurnedOn=val;
 }
 
 int BimoSettings::getLeftMotorPWM(){
