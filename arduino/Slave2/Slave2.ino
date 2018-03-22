@@ -20,13 +20,11 @@ int distance = 5;
 Motor m1(10, 4, 3);
 Motor m2(9, 7, 8);
 BimoSettings settings;
-BimoControl bimo(m1, m2, ultrasonic, settings);
 //led/tone control
-int ledPin = 2;// for tests
+int blincPin = 2;// for tests
 int led1Pin = 5;
-int led2Pin = 6;
 int tonePin = A5;
-unsigned int led1Mode = 0;
+BimoControl bimo(m1, m2, ultrasonic, settings, led1Pin);
 
 long connectionFlag = 0;
 bool connection;
@@ -38,7 +36,7 @@ void loop() {
   //TO DO: add connection 
 
   if (radio.available()) {
-    bimo.blinc(5);
+    blinc(6, 1);
     char len = radio.getDynamicPayloadSize();
     radio.read(data, len);
 
@@ -98,10 +96,6 @@ void interpretator() {
       break;
     case '20':   tone(tonePin, random(10, 800), 100);
       break;
-    case '202': if (led1Mode == 5) {
-        led1Mode = -1;
-      }
-      break;
     default :  bimo.stopMove();
   }
 }
@@ -120,10 +114,9 @@ void dataSendWrapper(char prefix, char data[], int masSize) {
 
 void configs() {
 
-  bimo.setBlincPin(ledPin);
   TCCR1B = TCCR1B & 0b11111000 | 5; //set PWM to low frecency
   analogReference(INTERNAL);
-  pinMode(ledPin, OUTPUT);
+  pinMode(blincPin, OUTPUT);
   pinMode(led1Pin, OUTPUT);
   pinMode(tonePin, OUTPUT);
   tone(tonePin, random(10, 800), 100);
@@ -131,17 +124,17 @@ void configs() {
   nrfSetup();
   tone(tonePin, random(10, 800), 100);
   delay(30);
-  bimo.blinc(10);
-  bimo.ledON(led1Pin);
-  bimo.blinc(30);
+  blinc(10, 2);
+  bimo.ledON();
+  blinc(30, 2);
   tone(tonePin, random(10, 800), 100);
   delay(30);
   tone(tonePin, random(10, 800), 100);
   delay(30);
   tone(tonePin, random(10, 800), 100);
-  bimo.ledON(led1Pin);
+  bimo.ledON();
   delay(30);
-  bimo.ledON(led1Pin);
+  bimo.ledON();
 }
 
 void nrfSetup() {
@@ -164,7 +157,17 @@ void nrfSetup() {
   radio.openReadingPipe(1, addr2);
 
   radio.powerUp();
-  bimo.blinc(100);
+  blinc(100, 10);
   radio.startListening();
-  bimo.blinc(10);
+  blinc(10, 2);
 }
+
+void blinc(int ms,  int n ){
+for(int i = n; i!=0; i--){
+  digitalWrite(blincPin, HIGH);
+  delay(ms/n);
+  digitalWrite(blincPin, LOW);
+  delay(ms/n);
+}
+}
+

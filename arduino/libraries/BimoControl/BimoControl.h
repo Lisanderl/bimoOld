@@ -7,7 +7,7 @@
 class BimoControl {
 	
 public:
-BimoControl(Motor m1, Motor m2, Ultrasonic ultrasonic, BimoSettings settings);
+BimoControl(Motor m1, Motor m2, Ultrasonic ultrasonic, BimoSettings settings, int ledPin);
 void setMotorPWM();
 void goStraight();
 void goBack();
@@ -17,11 +17,7 @@ void stopMove();
 //pls, if You use this functions, You should use HIGH pwm value (200 and more);
 void goRightEasy();
 void goLeftEasy();
-//
-void setBlincPin(int m_ledPin);
-void blinc(int ms);
-//pls use only analog pins, mode 0-5 = 0-100 % brightness
-void ledON(int pin);
+void ledON();
 
 private:
 Motor m_m1;
