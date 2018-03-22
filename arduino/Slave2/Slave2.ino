@@ -9,13 +9,12 @@
 
 //NRF24
 RF24 radio(A0, A1);
-char data[32];
-int d ;
+//Voltage
+int voltagePin = 2;
 //ECHO
 int trigPin = A3;
 int echoPin = A2;
 Ultrasonic ultrasonic(trigPin, echoPin);
-int distance = 5;
 //motors control
 Motor m1(10, 4, 3);
 Motor m2(9, 7, 8);
@@ -24,93 +23,11 @@ BimoSettings settings;
 int blincPin = 2;// for tests
 int led1Pin = 5;
 int tonePin = A5;
-BimoControl bimo(m1, m2, ultrasonic, settings, led1Pin);
+BimoControl bimo(m1, m2, ultrasonic, settings, led1Pin, tonePin);
 
-long connectionFlag = 0;
+long connectionCount = 0;
+long voltageCount = 0;
 bool connection;
-void setup() {
-  configs();
-}
-
-void loop() {
-  //TO DO: add connection 
-
-  if (radio.available()) {
-    blinc(6, 1);
-    char len = radio.getDynamicPayloadSize();
-    radio.read(data, len);
-
-  }
-
-  if (distance < 6) {
-     bimo.goBack();
-    delay(random(10, 150));
-    bimo.goBack();
-    delay(random(10, 150));
-     bimo.goBack();
-    delay(random(10, 100));
-    tone(tonePin, 700, 50);
-    bimo.stopMove();
-  }
-}
-void parseDataFromRadio() {
-  char requestData[32];
-  if (radio.available()) {
-    int len = radio.getDynamicPayloadSize();
-    radio.read(requestData, len);
-    
-  }
-}
-
-void connectionController() {
-  connectionFlag++;
-  if (connectionFlag == 10000000) {
-    //send request
-  }
-  if (connectionFlag == 15000000) {
-     connectionFlag=0;
-  }
-
-}
-
-void interpretator() {
-
-  switch (d) {
-    case '1':  if (distance > 5) {
-        bimo.goStraight();
-      }
-      break;
-    case '2':   bimo.goBack();
-      break;
-    case '4':  bimo.goLeft();
-      break;
-    case '7':   bimo.goRight();
-      break;
-    case '5':  //set slowly right
-      break;
-    case '8':  //set slowly left
-      break;
-    case '6':  //set back slowly right
-      break;
-    case '9':  //set back slowly left
-      break;
-    case '20':   tone(tonePin, random(10, 800), 100);
-      break;
-    default :  bimo.stopMove();
-  }
-}
-
-void dataSendWrapper(char prefix, char data[], int masSize) {
-  char message[masSize + 1];
-  radio.stopListening();
-  message[0] = prefix;
-  for (int i = 0; i < masSize; i++) {
-    message[i + 1] = data[i];
-  }
-  radio.write(message, masSize);
-  delay(1);
-  radio.startListening();
-}
 
 void configs() {
 
@@ -162,12 +79,87 @@ void nrfSetup() {
   blinc(10, 2);
 }
 
+void setup() {
+  configs();
+  nrfSetup();
+}
+
+void loop() {
+  radioListener();
+  echoListener(settings.echoActive);
+  voltageListener(settings.sendVoltage);
+  connectionListener();
+}
+
+// comunicatins with radio
+void parseDataFromRadio() {
+  char requestData[32];
+  if (radio.available()) {
+    int len = radio.getDynamicPayloadSize();
+    radio.read(requestData, len);
+    bimo.findAndGetDataFromArray(requestData);
+  }
+}
+
+void sendJson(String json) {
+  radio.stopListening();
+  delay(1);
+
+  int len = json.length() + 1;
+  char strArray(len);
+  json.toCharArray(strArray, len);
+  radio.write(strArray, len);
+
+  delay(1);
+  radio.startListening();
+}
+
 void blinc(int ms,  int n ){
-for(int i = n; i!=0; i--){
+for(int i = n; i != 0; i--){
   digitalWrite(blincPin, HIGH);
   delay(ms/n);
   digitalWrite(blincPin, LOW);
   delay(ms/n);
+ }
 }
+// listeners
+void echoListener(bool activeFlag){
+  if(activeFlag){
+    if(bimo.measureEchoValue() <= settings.echoDistance){
+      bimo.stopMove();
+      bimo.alarm();
+    }
+  }
+}
+
+void voltageListener(bool activeFlag){
+  voltageCount++;
+ if(activeFlag&&(voltageCount == 5000000)){
+  String json = jsonParser("V", String(analogRead(voltagePin), DEC));
+  sendJson(json);
+ }
+}
+
+void radioListener(){
+  if (radio.available()) {
+    blinc(6, 1);
+    parseDataFromRadio();
+  }
+}
+
+void connectionListener() {
+  connectionCount++;
+  if (connectionCount == 10000000) {
+    String json = jsonParser("C", "1");
+  }
+  if (connectionCount == 15000000) {
+     settings.isConnected = false; 
+     connectionCount=0;
+     bimo.stopMove();
+  }
+}
+
+String jsonParser(String name, String value) {
+  return "{\"" + name + "\":" + value + "}";
 }
 

@@ -7,7 +7,8 @@ public enum PropertyAction {
     LIGHT("L"),
     SPEED("S"),
     ECHO("E"),
-    VOLTAGE("V");
+    VOLTAGE("V"),
+    CONNECT("C");
 
     @Getter
     private String shortName;
