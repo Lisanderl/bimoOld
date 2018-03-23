@@ -1,9 +1,9 @@
-
-#include <nRF24L01.h>
-#include <printf.h>
+#include <Arduino.h>
 #include <RF24.h>
 #include <RF24_config.h>
 #include <SPI.h>
+#include <nRF24L01.h>
+#include <printf.h>
 
 RF24 radio(A0, A1);
 float const ADC1V1 = 0.02275;
@@ -15,39 +15,45 @@ int counter = 0;
 void setup() {
   pinMode(4, OUTPUT); // test
   pinMode(ledPin, OUTPUT);
-  Serial.begin(76800);
+  Serial.begin(115200);
   nrfSetup();
   //  radio.write(serialData, 1);
   radio.startListening();
 
 }
 void loop() {
- 
-    if (radio.available()) {
-      int len = radio.getDynamicPayloadSize();
-      char recivedData[len]; 
-      radio.read(recivedData, len);
-
-    
+String data = "";
+  if (radio.available()) {
+    int len = radio.getDynamicPayloadSize();
+    char recivedData[len]; 
+    radio.read(recivedData, len);
   }
+  
+    while (Serial.available()) {
+    data += (char)Serial.read();
+    delay(1);
+
+  }
+      if(!Serial.available()){
+      Serial.print(data);
+    }
+  
+  delay(1500);
+  Serial.println("opa");
+  delay(1000);
+  
 }
 
 void serialEvent() {
-  char serialData[32];
-  String data = "";
-  radio.stopListening();
-  while (Serial.available()) {
-    data += (char)Serial.read();
-  }
-
-  int len = data.length() + 1;
-  char strArray(len);
-  data.toCharArray(strArray, len);
-  strcpy(serialData, data.c_str());
-  delay(1);
-  bool requestStatus = radio.write(serialData, sizeof(serialData));
-  delay(1);
-  Serial.print(jsonParser("WriteToSlave", (String)requestStatus));
+  
+  //String dataa = "123321";
+  //int len = dataa.length() + 1;
+  //char strArray[len];
+  //dataa.toCharArray(strArray, len);
+  //delay(1);
+  //Serial.print(strArray);
+  // Serial.print(jsonParser("WriteToSlave", (String)requestStatus)); work
+  //Serial.print(gg.length()); work
 }
 
 void blinc(int ms) {
@@ -56,14 +62,15 @@ void blinc(int ms) {
   delay(ms);                  // waits for a second
   digitalWrite(ledPin, LOW);    // sets the LED off
   delay(ms);
-  char serialData[0];
-  sizeof(serialData);
+
 }
 
 void nrfSetup() {
   bool master = true;
-  byte addr1[] = {0xC2, 0xC2, 0xC2, 0xC2, 0xC2};
-  byte addr2[] = {0xE7, 0xE7, 0xE7, 0xE7, 0xE7};
+  byte addr1[] = {
+    0xC2, 0xC2, 0xC2, 0xC2, 0xC2  };
+  byte addr2[] = {
+    0xE7, 0xE7, 0xE7, 0xE7, 0xE7  };
 
   radio.begin();
   radio.txDelay = 135;
@@ -86,6 +93,7 @@ void nrfSetup() {
 String jsonParser(String name, String value) {
   return "{\"" + name + "\":" + value + "}";
 }
+
 
 
 
