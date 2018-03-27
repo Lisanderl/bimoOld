@@ -2,35 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e457cd22-f85e-4fa4-80f5-e273110acdcd" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/mycompany/comjava/utils/ReadDataHelper.java" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/META-INF/MANIFEST.MF" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" afterPath="$PROJECT_DIR$/.idea/compiler.xml" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/ComJava.iml" afterPath="$PROJECT_DIR$/ComJava.iml" />
-      <change beforePath="$PROJECT_DIR$/arduino/Slave2/Slave2.ino" afterPath="$PROJECT_DIR$/arduino/Slave2/Slave2.ino" />
-      <change beforePath="$PROJECT_DIR$/arduino/libraries/BimoControl/BimoControl.cpp" afterPath="$PROJECT_DIR$/arduino/libraries/BimoControl/BimoControl.cpp" />
-      <change beforePath="$PROJECT_DIR$/arduino/libraries/BimoControl/BimoControl.h" afterPath="$PROJECT_DIR$/arduino/libraries/BimoControl/BimoControl.h" />
-      <change beforePath="$PROJECT_DIR$/arduino/libraries/BimoSettings/BimoSettings.h" afterPath="$PROJECT_DIR$/arduino/libraries/BimoSettings/BimoSettings.h" />
-      <change beforePath="$PROJECT_DIR$/arduino/libraries/Motor/Motor.cpp" afterPath="$PROJECT_DIR$/arduino/libraries/Motor/Motor.cpp" />
-      <change beforePath="$PROJECT_DIR$/arduino/libraries/Motor/Motor.h" afterPath="$PROJECT_DIR$/arduino/libraries/Motor/Motor.h" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/mycompany/comjava/SetupDto.java" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/mycompany/comjava/VoltageCalculation.java" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" afterPath="$PROJECT_DIR$/pom.xml" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/mycompany/comjava/controller/GuiController.java" afterPath="$PROJECT_DIR$/src/main/java/com/mycompany/comjava/controller/GuiController.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/mycompany/comjava/controller/KeyBoardAction.java" afterPath="$PROJECT_DIR$/src/main/java/com/mycompany/comjava/config/KeyBoardAction.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/mycompany/comjava/controller/PropertyAction.java" afterPath="$PROJECT_DIR$/src/main/java/com/mycompany/comjava/config/PropertyAction.java" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/mycompany/comjava/controller/SerialPortController.java" afterPath="$PROJECT_DIR$/src/main/java/com/mycompany/comjava/controller/SerialPortController.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/mycompany/comjava/logger/TextComponentLogger.java" afterPath="$PROJECT_DIR$/src/main/java/com/mycompany/comjava/utils/TextComponentLogger.java" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/mycompany/comjava/controller/KeyBoardActionTest.java" afterPath="$PROJECT_DIR$/src/test/java/com/mycompany/comjava/controller/KeyBoardActionTest.java" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/mycompany/comjava/controller/PropertyActionTest.java" afterPath="$PROJECT_DIR$/src/test/java/com/mycompany/comjava/controller/PropertyActionTest.java" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/mycompany/comjava/gui/MainFrameTest.java" afterPath="$PROJECT_DIR$/src/test/java/com/mycompany/comjava/gui/MainFrameTest.java" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/mycompany/comjava/MainClass.class" afterPath="$PROJECT_DIR$/target/classes/com/mycompany/comjava/MainClass.class" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/mycompany/comjava/VoltageCalculation.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/mycompany/comjava/controller/GuiController$1.class" afterPath="$PROJECT_DIR$/target/classes/com/mycompany/comjava/controller/GuiController$1.class" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/mycompany/comjava/controller/GuiController$ActionKeysListener.class" afterPath="$PROJECT_DIR$/target/classes/com/mycompany/comjava/controller/GuiController$ActionKeysListener.class" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/mycompany/comjava/controller/GuiController$ControlButtonListener.class" afterPath="$PROJECT_DIR$/target/classes/com/mycompany/comjava/controller/GuiController$ControlButtonListener.class" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/mycompany/comjava/controller/GuiController.class" afterPath="$PROJECT_DIR$/target/classes/com/mycompany/comjava/controller/GuiController.class" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/mycompany/comjava/controller/SerialPortController$MySerialEventListener.class" afterPath="$PROJECT_DIR$/target/classes/com/mycompany/comjava/controller/SerialPortController$MySerialEventListener.class" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/mycompany/comjava/controller/SerialPortController.class" afterPath="$PROJECT_DIR$/target/classes/com/mycompany/comjava/controller/SerialPortController.class" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/mycompany/comjava/gui/MainFrame.class" afterPath="$PROJECT_DIR$/target/classes/com/mycompany/comjava/gui/MainFrame.class" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/mycompany/comjava/logger/TextComponentLogger.class" afterPath="" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -56,16 +36,26 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="GuiController.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="GuiController.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/mycompany/comjava/controller/GuiController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="116">
-              <caret line="158" column="0" lean-forward="true" selection-start-line="158" selection-start-column="0" selection-end-line="158" selection-end-column="0" />
+            <state relative-caret-position="190">
+              <caret line="186" column="33" lean-forward="false" selection-start-line="186" selection-start-column="33" selection-end-line="186" selection-end-column="33" />
               <folding>
                 <element signature="method#addSerialPortAdjListeners#0;class#GuiController#0" expanded="false" />
-                <element signature="e#7506#7507#0" expanded="true" />
-                <element signature="e#7550#7551#0" expanded="true" />
+                <element signature="e#7507#7508#0" expanded="true" />
+                <element signature="e#7551#7552#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="pom.xml" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/pom.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="393">
+              <caret line="126" column="31" lean-forward="true" selection-start-line="126" selection-start-column="31" selection-end-line="126" selection-end-column="31" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -73,45 +63,9 @@
       <file leaf-file-name="MainClass.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/mycompany/comjava/MainClass.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="153">
-              <caret line="14" column="13" lean-forward="false" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
+            <state relative-caret-position="17">
+              <caret line="1" column="8" lean-forward="false" selection-start-line="1" selection-start-column="8" selection-end-line="1" selection-end-column="29" />
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="BimoSettings.cpp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/arduino/libraries/BimoSettings/BimoSettings.cpp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="8" column="0" lean-forward="false" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="PropertyAction.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/mycompany/comjava/config/PropertyAction.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="391">
-              <caret line="25" column="34" lean-forward="false" selection-start-line="25" selection-start-column="25" selection-end-line="25" selection-end-column="34" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#282#283#0" expanded="true" />
-                <element signature="e#324#325#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SerialPortController.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/mycompany/comjava/controller/SerialPortController.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="289">
-              <caret line="143" column="56" lean-forward="false" selection-start-line="143" selection-start-column="56" selection-end-line="143" selection-end-column="56" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -154,6 +108,7 @@
         <option value="$PROJECT_DIR$/src/main/java/com/mycompany/comjava/utils/ReadDataHelper.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/mycompany/comjava/controller/SerialPortController.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/mycompany/comjava/controller/GuiController.java" />
+        <option value="$PROJECT_DIR$/pom.xml" />
       </list>
     </option>
   </component>
@@ -179,11 +134,11 @@
         </path>
         <path>
           <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
-          <item name="BimoGUI" type="9519ce18:MavenProjectsStructure$ProjectNode" />
+          <item name="ComJava" type="9519ce18:MavenProjectsStructure$ProjectNode" />
         </path>
         <path>
           <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
-          <item name="BimoGUI" type="9519ce18:MavenProjectsStructure$ProjectNode" />
+          <item name="ComJava" type="9519ce18:MavenProjectsStructure$ProjectNode" />
           <item name="Lifecycle" type="58874e2:MavenProjectsStructure$LifecycleNode" />
         </path>
       </expand>
@@ -224,116 +179,7 @@
             <path>
               <item name="ComJava" type="b2602c69:ProjectViewProjectNode" />
               <item name="ComJava" type="462c0819:PsiDirectoryNode" />
-              <item name="arduino" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ComJava" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ComJava" type="462c0819:PsiDirectoryNode" />
-              <item name="arduino" type="462c0819:PsiDirectoryNode" />
-              <item name="libraries" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ComJava" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ComJava" type="462c0819:PsiDirectoryNode" />
-              <item name="arduino" type="462c0819:PsiDirectoryNode" />
-              <item name="libraries" type="462c0819:PsiDirectoryNode" />
-              <item name="BimoControl" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ComJava" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ComJava" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ComJava" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ComJava" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ComJava" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ComJava" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ComJava" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ComJava" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="comjava" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ComJava" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ComJava" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="comjava" type="462c0819:PsiDirectoryNode" />
-              <item name="config" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ComJava" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ComJava" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="comjava" type="462c0819:PsiDirectoryNode" />
-              <item name="controller" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ComJava" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ComJava" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="comjava" type="462c0819:PsiDirectoryNode" />
-              <item name="utils" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ComJava" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ComJava" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ComJava" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ComJava" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ComJava" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ComJava" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="comjava" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ComJava" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ComJava" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="comjava" type="462c0819:PsiDirectoryNode" />
-              <item name="controller" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ComJava" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ComJava" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="comjava" type="462c0819:PsiDirectoryNode" />
-              <item name="gui" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ComJava" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="target" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -754,13 +600,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/test/java/com/mycompany/comjava/gui/MainFrameTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="29" column="66" lean-forward="false" selection-start-line="29" selection-start-column="66" selection-end-line="29" selection-end-column="66" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://C:/Program Files/Java/jdk1.8.0_152/src.zip!/javax/swing/JTextArea.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="187">
@@ -785,13 +624,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="340">
           <caret line="49" column="0" lean-forward="false" selection-start-line="49" selection-start-column="0" selection-end-line="49" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="731">
-          <caret line="43" column="21" lean-forward="false" selection-start-line="43" selection-start-column="21" selection-end-line="43" selection-end-column="21" />
         </state>
       </provider>
     </entry>
@@ -898,7 +730,7 @@
         <state relative-caret-position="680">
           <caret line="40" column="0" lean-forward="false" selection-start-line="40" selection-start-column="0" selection-end-line="40" selection-end-column="0" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1006,18 +838,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/mycompany/comjava/config/PropertyAction.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="25" column="34" lean-forward="false" selection-start-line="25" selection-start-column="25" selection-end-line="25" selection-end-column="34" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#282#283#0" expanded="true" />
-            <element signature="e#324#325#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/arduino/libraries/BimoControl/BimoControl.cpp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1918">
@@ -1050,20 +870,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/mycompany/comjava/MainClass.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="14" column="13" lean-forward="false" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/com/mycompany/comjava/gui/MainFrameTest.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="383">
           <caret line="31" column="66" lean-forward="false" selection-start-line="31" selection-start-column="66" selection-end-line="31" selection-end-column="66" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1073,34 +885,70 @@
         <state relative-caret-position="374">
           <caret line="25" column="0" lean-forward="false" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
           <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#392#393#0" expanded="true" />
-            <element signature="e#458#459#0" expanded="true" />
-            <element signature="e#721#722#0" expanded="true" />
-            <element signature="e#756#757#0" expanded="true" />
+            <element signature="imports" expanded="false" />
+            <element signature="e#392#393#0" expanded="false" />
+            <element signature="e#458#459#0" expanded="false" />
+            <element signature="e#721#722#0" expanded="false" />
+            <element signature="e#756#757#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/mycompany/comjava/controller/SerialPortController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="143" column="56" lean-forward="false" selection-start-line="143" selection-start-column="56" selection-end-line="143" selection-end-column="56" />
+        <state relative-caret-position="-133">
+          <caret line="84" column="15" lean-forward="true" selection-start-line="84" selection-start-column="15" selection-end-line="84" selection-end-column="15" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="imports" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/mycompany/comjava/config/PropertyAction.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="37" lean-forward="true" selection-start-line="0" selection-start-column="37" selection-end-line="0" selection-end-column="37" />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="e#282#283#0" expanded="false" />
+            <element signature="e#324#325#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/mycompany/comjava/controller/GuiController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="116">
-          <caret line="158" column="0" lean-forward="true" selection-start-line="158" selection-start-column="0" selection-end-line="158" selection-end-column="0" />
+        <state relative-caret-position="190">
+          <caret line="186" column="33" lean-forward="false" selection-start-line="186" selection-start-column="33" selection-end-line="186" selection-end-column="33" />
           <folding>
             <element signature="method#addSerialPortAdjListeners#0;class#GuiController#0" expanded="false" />
-            <element signature="e#7506#7507#0" expanded="true" />
-            <element signature="e#7550#7551#0" expanded="true" />
+            <element signature="e#7507#7508#0" expanded="true" />
+            <element signature="e#7551#7552#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/META-INF/MANIFEST.MF">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/mycompany/comjava/MainClass.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="1" column="8" lean-forward="false" selection-start-line="1" selection-start-column="8" selection-end-line="1" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="393">
+          <caret line="126" column="31" lean-forward="true" selection-start-line="126" selection-start-column="31" selection-end-line="126" selection-end-column="31" />
+          <folding />
         </state>
       </provider>
     </entry>

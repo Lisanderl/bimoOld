@@ -138,7 +138,7 @@ public class SerialPortController {
 //</editor-fold>
 
     
-    private class MySerialEventListener implements SerialPortEventListener{
+    private class MySerialEventListener implements SerialPortEventListener {
      
         @Override
         public void serialEvent(SerialPortEvent event) {

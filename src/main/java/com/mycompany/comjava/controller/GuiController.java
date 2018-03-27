@@ -184,7 +184,7 @@ public class GuiController {
             keyEraser();
         }
 
-        private void keyEraser(){
+        private void keyEraser() {
             if(activeReleasedKey.equals(activePressedKey)){
                 activeReleasedKey = "";
                 activePressedKey= "";
