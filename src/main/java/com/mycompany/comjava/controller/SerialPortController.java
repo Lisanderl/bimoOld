@@ -1,14 +1,16 @@
 package com.mycompany.comjava.controller;
 
-import com.mycompany.comjava.VoltageCalculation;
+import com.mycompany.comjava.config.PropertyAction;
 import com.mycompany.comjava.gui.MainFrame;
 
+import java.nio.charset.Charset;
 import java.util.Arrays;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.mycompany.comjava.logger.TextComponentLogger;
+import static com.mycompany.comjava.utils.ReadDataHelper.*;
+import com.mycompany.comjava.utils.TextComponentLogger;
 import jssc.SerialPort;
 import jssc.SerialPortEvent;
 import jssc.SerialPortEventListener;
@@ -73,18 +75,6 @@ public class SerialPortController {
         }
     }
 
-    // request - data request
-    // answ
-    public void writeRequest(String request) {
-
-        try {
-            mainPort.writeBytes(request.getBytes());
-
-        } catch (SerialPortException ex) {
-            Logger.getLogger(SerialPortController.class.getName()).log(Level.SEVERE, null, ex);
-            logger.ERROR(" Read err ");
-        }
-    }
 
     public void putPortToBox() {
         mainFrame.getCOMPort().removeAllItems();
@@ -155,13 +145,23 @@ public class SerialPortController {
             if(event.isRXCHAR()) {
                 int bufferSize = event.getEventValue();
                 try {
-                    byte[] buffer = mainPort.readBytes(bufferSize);
-
+                    String data = bytesToString(mainPort.readBytes(bufferSize));
+                    String key = PropertyAction.isStrContainsShortValue(data);
+                    if(key.isEmpty()){logger.ERROR("Read empty str ");
+                    }else {
+                        switch (key){
+                            case "C" : write(PropertyAction.jsonValue(PropertyAction.CONNECT, 1)); break;
+                            case "V" :  mainFrame.getBatteryVoltage().setText(String.valueOf(getVoltage(getIntFromStr(data)))); break;
+                        }
+                    }
                 } catch (SerialPortException e) {
                     e.printStackTrace();
+                    logger.ERROR("read error");
                 }
             }
         }
         
     }
+
+
 }

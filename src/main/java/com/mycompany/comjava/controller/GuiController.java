@@ -5,8 +5,10 @@
  */
 package com.mycompany.comjava.controller;
 
+import com.mycompany.comjava.config.KeyBoardAction;
+import com.mycompany.comjava.config.PropertyAction;
 import com.mycompany.comjava.gui.MainFrame;
-import com.mycompany.comjava.logger.TextComponentLogger;
+import com.mycompany.comjava.utils.TextComponentLogger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -14,12 +16,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.Optional;
 import java.util.Timer;
-import java.util.TimerTask;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -123,6 +123,7 @@ public class GuiController {
             }
             if(e.getStateChange() == ItemEvent.DESELECTED){
                 serialPortController.write(PropertyAction.jsonValue(PropertyAction.VOLTAGE, 0));
+                mainFrame.getBatteryVoltage().setText("");
             }
         });
 
@@ -153,14 +154,13 @@ public class GuiController {
     ////Keyboard
     private class ActionKeysListener extends KeyAdapter {
        Optional<KeyBoardAction> optionalAction;
-        String activeReleasedKey = null;
-        String activePressedKey = null;
+        String activeReleasedKey = "";
+        String activePressedKey = "";
 
         @Override
         public void keyPressed(KeyEvent e) {
             String pressedKey = e.getKeyText(e.getKeyCode());
             if(!pressedKey.equals(activePressedKey)){
-                System.out.print(pressedKey);
                 activePressedKey = pressedKey;
                 optionalAction = KeyBoardAction.findActionByButton(activePressedKey);
                 if(optionalAction.isPresent()){
@@ -180,6 +180,15 @@ public class GuiController {
                     optionalAction.get().setActive(false);
                  serialPortController.write(String.valueOf(KeyBoardAction.getSumOfActiveActions()));
                 }
+            }
+            keyEraser();
+        }
+
+        private void keyEraser(){
+            if(activeReleasedKey.equals(activePressedKey)){
+                activeReleasedKey = "";
+                activePressedKey= "";
+
             }
         }
 

@@ -51,6 +51,7 @@ m_settings.sendVoltage = root.get<bool>(VOLTAGE);
 
 if(root.containsKey(CONNECT)){
 m_settings.isConnected = true;
+m_settings.connectionCount = 0;
 }
 
 }
@@ -137,6 +138,10 @@ void BimoControl::ledON() {
   analogWrite(m_ledPin, m_settings.lightPWM);
 }
 
+bool BimoControl::isMoving(){
+ return ((m_m1.isWorkingRightNow()) || (m_m2.isWorkingRightNow())) ? true : false;
+}
+
 void BimoControl::tryComeBack() {
  int pmw1 = m_settings.leftMotorPWM;
  int pmw2 = m_settings.rightMotorPWM;
@@ -145,7 +150,7 @@ void BimoControl::tryComeBack() {
  m_settings.rightMotorPWM = 70;
 
  goLeft();
- delay(1500);
+ delay(1100);
  stopMove();
  for(int i = 4; i != 0; i--){
  if(measureEchoValue() >= 8){

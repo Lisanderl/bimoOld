@@ -1,10 +1,7 @@
-package com.mycompany.comjava.logger;
+package com.mycompany.comjava.utils;
 
-
-import org.springframework.stereotype.Component;
 
 import javax.swing.text.JTextComponent;
-import java.awt.*;
 
 public class TextComponentLogger {
 

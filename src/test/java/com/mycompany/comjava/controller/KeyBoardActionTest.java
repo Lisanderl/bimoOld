@@ -3,6 +3,7 @@ package com.mycompany.comjava.controller;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.mycompany.comjava.config.AppConfig;
+import com.mycompany.comjava.config.KeyBoardAction;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.annotation.DirtiesContext;

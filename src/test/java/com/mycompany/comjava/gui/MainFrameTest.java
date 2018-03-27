@@ -4,7 +4,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mycompany.comjava.SetupDto;
 import com.mycompany.comjava.config.AppConfig;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -32,10 +31,6 @@ public class MainFrameTest {
         assertThat(lal.startsWith("i", 1)).isTrue();
         assertThat(lal2.replaceFirst("AD1C", "")).isEqualTo("12");
 
-        ObjectMapper objectMapper = new ObjectMapper();
-        SetupDto setupDto =  new SetupDto(50,100,20,"+");
-        System.out.println(objectMapper.writeValueAsString(setupDto));
-        System.out.println("///////////////////////////////////////////////////////////");
 
     }
 

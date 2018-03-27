@@ -2,6 +2,7 @@ package com.mycompany.comjava.controller;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import com.mycompany.comjava.config.AppConfig;
+import com.mycompany.comjava.config.PropertyAction;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.annotation.DirtiesContext;
@@ -19,6 +20,8 @@ public class PropertyActionTest {
     public void getCorrectJson(){
 
         assertThat(PropertyAction.jsonValue(PropertyAction.ECHO, 5)).isEqualTo("{\"E\":5}");
+        String voltageJson = "{\"V\":532}";
+        assertThat(voltageJson.replaceAll("[^0-9]", "")).isEqualTo("532");
 
     }
 

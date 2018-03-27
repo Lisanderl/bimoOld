@@ -30,7 +30,7 @@ void ledON();
 void tryComeBack();
 void alarm();
 int measureEchoValue();
-
+bool isMoving();
 private:
 
 void doAction(int val);

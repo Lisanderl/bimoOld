@@ -1,3 +1,5 @@
+#include <Arduino.h>
+#include <Motor.h>
 #include <BimoControl.h>
 #include <BimoSettings.h>
 #include <nRF24L01.h>
@@ -25,10 +27,7 @@ int led1Pin = 5;
 int tonePin = A5;
 BimoControl bimo(m1, m2, ultrasonic, settings, led1Pin, tonePin);
 
-long connectionCount = 0;
-long voltageCount = 0;
 bool connection;
-
 void configs() {
 
   TCCR1B = TCCR1B & 0b11111000 | 5; //set PWM to low frecency
@@ -87,8 +86,8 @@ void setup() {
 void loop() {
   radioListener();
   echoListener(settings.echoActive);
-  voltageListener(settings.sendVoltage);
-  connectionListener();
+  voltageListener(settings.sendVoltage, settings.voltageCount);
+  connectionListener(settings.connectionCount);
 }
 
 // comunicatins with radio
@@ -114,6 +113,10 @@ void sendJson(String json) {
   radio.startListening();
 }
 
+String jsonParser(String name, String value) {
+  return "{\"" + name + "\":" + value + "}";
+}
+
 void blinc(int ms,  int n ){
 for(int i = n; i != 0; i--){
   digitalWrite(blincPin, HIGH);
@@ -132,11 +135,12 @@ void echoListener(bool activeFlag){
   }
 }
 
-void voltageListener(bool activeFlag){
-  voltageCount++;
- if(activeFlag&&(voltageCount == 5000000)){
+void voltageListener(bool activeFlag, long count){
+  count++;
+ if(activeFlag&&(count > 5000000)){
   String json = jsonParser("V", String(analogRead(voltagePin), DEC));
   sendJson(json);
+  settings.voltageCount = 0;
  }
 }
 
@@ -147,19 +151,18 @@ void radioListener(){
   }
 }
 
-void connectionListener() {
-  connectionCount++;
-  if (connectionCount == 10000000) {
+void connectionListener(long count) {
+  count++;
+  if (count == 10000000) {
     String json = jsonParser("C", "1");
+    sendJson(json);
+    settings.isConnected = false;
   }
-  if (connectionCount == 15000000) {
-     settings.isConnected = false; 
-     connectionCount=0;
+  if ((count == 13000000)&&(!settings.isConnected)) {
+     count=0;
+     if(bimo.isMoving()){
      bimo.stopMove();
+     }
   }
-}
-
-String jsonParser(String name, String value) {
-  return "{\"" + name + "\":" + value + "}";
 }
 

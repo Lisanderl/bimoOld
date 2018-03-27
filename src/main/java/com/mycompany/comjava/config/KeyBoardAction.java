@@ -1,4 +1,4 @@
-package com.mycompany.comjava.controller;
+package com.mycompany.comjava.config;
 
 import lombok.Getter;
 import lombok.Setter;

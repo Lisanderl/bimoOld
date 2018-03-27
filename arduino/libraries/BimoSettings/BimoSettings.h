@@ -12,7 +12,8 @@ int echoDistance;
 bool isConnected;
 bool sendVoltage;
 bool echoActive;
-
+long connectionCount = 0;
+long voltageCount = 0;
 private:
 
 };
