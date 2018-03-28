@@ -206,7 +206,7 @@ public class GuiController {
 
             switch (button.getText()) {
                 case "Ref":
-                    serialPortController.putPortToBox();
+                    serialPortController.putPortNameToBox();
                     break;
                 case "Clear":
                     logger.clearLog();

@@ -3,7 +3,6 @@ package com.mycompany.comjava.controller;
 import com.mycompany.comjava.config.PropertyAction;
 import com.mycompany.comjava.gui.MainFrame;
 
-import java.nio.charset.Charset;
 import java.util.Arrays;
 import java.util.Optional;
 import java.util.logging.Level;
@@ -34,16 +33,7 @@ public class SerialPortController {
 
         this.mainFrame = mainFrame;
         this.logger = TextComponentLogger.getInstance(mainFrame.getLog());
-        putPortToBox();
-    }
-
-    private void setDefaultValues(){
-        mainPort = null;
-        portName = "COM3";
-        portSpeed = 76800;
-        bits = SerialPort.DATABITS_8;
-        stopBits = SerialPort.STOPBITS_1;
-        parity = SerialPort.PARITY_NONE;
+        putPortNameToBox();
     }
 
     private SerialPort createNewPortAndOpen() {
@@ -76,7 +66,7 @@ public class SerialPortController {
     }
 
 
-    public void putPortToBox() {
+    public void putPortNameToBox() {
         mainFrame.getCOMPort().removeAllItems();
         Optional<String[]> portNamesOptional = Optional.of(SerialPortList.getPortNames());
         if (portNamesOptional.isPresent()){
