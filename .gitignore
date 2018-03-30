@@ -1,7 +1,6 @@
 .gitignore
 artifacts
 overlays
-idea
 lucene-indexes
 .classpath
 .project
@@ -11,6 +10,7 @@ lucene-indexes
 *.iml
 *.iws
 .idea
+*.idea
 *~
 .*~
 /lingua
