@@ -34,7 +34,7 @@ if(root.containsKey(ECHO)){
     }
 
     if(root.is<int>(ECHO)){
-       m_settings.echoActive = root.get<int>(ECHO);
+       m_settings.echoDistance = root.get<int>(ECHO);
     }
 return;
 }
@@ -46,7 +46,12 @@ return;
 }
 
 if(root.containsKey(VOLTAGE)){
-m_settings.sendVoltage = root.get<bool>(VOLTAGE);
+if(root.get<int>(VOLTAGE) == 1){
+m_settings.sendVoltage = true;
+}else {
+m_settings.sendVoltage = false;
+}
+
 }
 
 if(root.containsKey(CONNECT)){
@@ -59,23 +64,23 @@ m_settings.connectionCount = 0;
 void BimoControl::doAction(int val){
 
   switch (val) {
-    case '1':   goStraight();
+    case 1:   goStraight();
       break;
-    case '2':   goBack();
+    case 2:   goBack();
       break;
-    case '4':   goLeft();
+    case 4:   goLeft();
       break;
-    case '7':   goRight();
+    case 7:   goRight();
       break;
-    case '5':   goLeftEasy();
+    case 5:   goLeftEasy();
       break;
-    case '8':   goRightEasy();
+    case 8:   goRightEasy();
       break;
-    case '6':  //set back slowly right
+    case 6:  //set back slowly right
       break;
-    case '9':  //set back slowly left
+    case 9:  //set back slowly left
       break;
-    case '20':   alarm();
+    case 20:   alarm();
       break;
     default :  stopMove();
   }
@@ -83,51 +88,59 @@ void BimoControl::doAction(int val){
 }
 
 void BimoControl::setMotorPWM(){
+
 	m_m1.setPWM(m_settings.leftMotorPWM);
 	m_m2.setPWM(m_settings.rightMotorPWM);
 }
 
 void BimoControl::goStraight(){
+
     setMotorPWM();
 	m_m1.on();
 	m_m2.on();
 }
 
 void BimoControl::goBack(){
+
     setMotorPWM();
 	m_m1.reverse();
 	m_m2.reverse();
 }
 
 void BimoControl::goRight(){
-    setMotorPWM();
-	m_m2.on();
-	m_m1.reverse();
-}
 
-void BimoControl::goRightEasy(){
-    m_m1.setPWM(m_settings.leftMotorPWM/3);
-	m_m1.on();
-    m_m2.on();
-}
-
-void BimoControl::goLeft(){
     setMotorPWM();
 	m_m2.reverse();
 	m_m1.on();
 }
 
+void BimoControl::goRightEasy(){
+
+    m_m2.setPWM(m_settings.rightMotorPWM/5);
+	m_m1.on();
+    m_m2.on();
+}
+
+void BimoControl::goLeft(){
+
+    setMotorPWM();
+	m_m2.on();
+	m_m1.reverse();
+}
+
 void BimoControl::goLeftEasy(){
-    m_m2.setPWM(m_settings.rightMotorPWM/3);
+
+    m_m1.setPWM(m_settings.leftMotorPWM/5);
 	m_m1.on();
     m_m2.on();
 }
 
 void BimoControl::stopMove(){
+
 	m_m1.off();
 	m_m2.off();
-		m_m1.setPWM(0);
-    	m_m2.setPWM(0);
+	m_m1.setPWM(0);
+    m_m2.setPWM(0);
 }
 
 void BimoControl::alarm(){
@@ -165,6 +178,6 @@ void BimoControl::tryComeBack() {
 }
 
 int BimoControl::measureEchoValue() {
-  return (int)m_ultrasonic.distanceRead();
+  return (int)m_ultrasonic.Ranging(CM);
 }
 
