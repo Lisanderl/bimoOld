@@ -27,7 +27,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class MainFrame extends JFrame {
 
-    private JLabel configL, speedL, bitsL, stopBitsL;
+    private JLabel configL, speedL, bitsL, stopBitsL, connection;
     private JPanel mainPanel, topPanel, bottomPanel, leftPanel, rightPanel, bottomLeft;
     private JButton  test, refresh, clearLog, verify;
     private JCheckBox led, adc, pwm, echo;
@@ -55,6 +55,7 @@ public class MainFrame extends JFrame {
         speedL = new JLabel("Speed");
         bitsL = new JLabel("bits");
         stopBitsL = new JLabel("stop");
+        connection = new JLabel("No connection");
         //panels
         mainPanel = new JPanel(new BorderLayout());
         topPanel = new JPanel(new FlowLayout());
@@ -144,23 +145,26 @@ public class MainFrame extends JFrame {
         rightPanel.setPreferredSize(new Dimension(getWidth() / 2 - 130, getHeight() - 80));
 
         c.fill = GridBagConstraints.HORIZONTAL;
-        c.gridx = 6;
+
         c.gridy = 0;
+        c.gridx = 6;
+        rightPanel.add(connection, c);
+        c.gridy = 1;
         rightPanel.add(batteryVoltage, c);
         c.gridx = 5;
         rightPanel.add(adc, c);
-        c.gridy = 1;
+        c.gridy = 2;
         rightPanel.add(echo, c);
         c.gridx = 6;
         rightPanel.add(echoRange, c);
         batteryVoltage.setEditable(false);
         // rightPanel.add(adc, c);
         c.gridx = 6;
-        c.gridy = 2;
+        c.gridy = 3;
         rightPanel.add(pwm, c);
         c.gridx = 5;
         rightPanel.add(led, c);
-        c.gridy = 3;
+        c.gridy = 4;
         rightPanel.add(lightSlider, c);
         c.gridx = 6;
         rightPanel.add(speedSlider, c);

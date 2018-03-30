@@ -5,6 +5,8 @@ import com.mycompany.comjava.gui.MainFrame;
 
 import java.util.Arrays;
 import java.util.Optional;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -27,6 +29,9 @@ public class SerialPortController {
     private String portName;
 
     private int portSpeed, bits, stopBits, parity;
+
+    private Timer timer;
+    private final int delay = 7500;
 
     @Autowired
     public SerialPortController(MainFrame mainFrame) {
@@ -140,8 +145,13 @@ public class SerialPortController {
                     if(key.isEmpty()){logger.ERROR("Read empty str ");
                     }else {
                         switch (key){
-                            case "C" : write(PropertyAction.jsonValue(PropertyAction.CONNECT, 1)); break;
-                            case "V" :  mainFrame.getBatteryVoltage().setText(String.valueOf(getVoltage(getIntFromStr(data)))); break;
+                            case "C" : write(PropertyAction.jsonValue(PropertyAction.CONNECT, 1));
+                            mainFrame.getConnection().setText("Connected");
+                            timer = new Timer();
+                            timer.schedule(new ConnectionTask(), delay);
+                            break;
+                            case "V" : mainFrame.getBatteryVoltage().setText(String.valueOf(getVoltage(getIntFromStr(data))));
+                            break;
                         }
                     }
                 } catch (SerialPortException e) {
@@ -151,6 +161,14 @@ public class SerialPortController {
             }
         }
         
+    }
+
+    private class ConnectionTask extends TimerTask{
+
+        @Override
+        public void run() {
+            mainFrame.getConnection().setText("No connect");
+        }
     }
 
 
