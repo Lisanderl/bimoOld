@@ -165,7 +165,7 @@ public class GuiController {
                 optionalAction = KeyBoardAction.findActionByButton(activePressedKey);
                 if(optionalAction.isPresent()){
                     optionalAction.get().setActive(true);
-                    serialPortController.write(String.valueOf(KeyBoardAction.getSumOfActiveActions()));
+                    serialPortController.write(KeyBoardAction.jsonValue(KeyBoardAction.getSumOfActiveActions()));
                 }
             }
         }
@@ -178,7 +178,7 @@ public class GuiController {
                 optionalAction = KeyBoardAction.findActionByButton(activeReleasedKey);
                 if(optionalAction.isPresent()){
                     optionalAction.get().setActive(false);
-                 serialPortController.write(String.valueOf(KeyBoardAction.getSumOfActiveActions()));
+                 serialPortController.write(KeyBoardAction.jsonValue(KeyBoardAction.getSumOfActiveActions()));
                 }
             }
             keyEraser();

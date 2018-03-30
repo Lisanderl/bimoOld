@@ -5,8 +5,8 @@ class BimoSettings {
 public:
 BimoSettings();
 
-int leftMotorPWM;
-int rightMotorPWM;
+int leftMotorPWM = 80;
+int rightMotorPWM = 80;
 int lightPWM;
 int echoDistance;
 bool isConnected;
