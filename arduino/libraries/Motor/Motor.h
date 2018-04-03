@@ -10,7 +10,7 @@ public:
  void on();
  void off();
  void reverse();
- bool isWorkingRightNow();
+ int isWorkingRightNow();
 private:
 int m_PWM;
 int m_Positive;

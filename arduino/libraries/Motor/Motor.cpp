@@ -41,8 +41,8 @@ void Motor::off() {
   digitalWrite(m_Positive, LOW);
   digitalWrite(m_Negative, LOW);
 }
-bool Motor::isWorkingRightNow() {
-    return ((digitalRead(m_Positive) == HIGH) || (digitalRead(m_Negative) == HIGH)) ? true : false ;
+int Motor::isWorkingRightNow() {
+    return ((digitalRead(m_Positive) == HIGH) || (digitalRead(m_Negative) == HIGH)) ? 1 : 0 ;
 }
 
 	

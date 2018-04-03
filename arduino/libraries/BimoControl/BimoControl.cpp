@@ -29,12 +29,10 @@ return;
 }
 
 if(root.containsKey(ECHO)){
-    if(root.is<bool>(ECHO)){
-       m_settings.echoDistance = root.get<bool>(ECHO);
-    }
-
-    if(root.is<int>(ECHO)){
+    if(root.get<int>(ECHO) > 1){
        m_settings.echoDistance = root.get<int>(ECHO);
+    }else {
+       m_settings.echoActive = root.get<int>(ECHO);
     }
 return;
 }
@@ -46,17 +44,13 @@ return;
 }
 
 if(root.containsKey(VOLTAGE)){
-if(root.get<int>(VOLTAGE) == 1){
-m_settings.sendVoltage = true;
-}else {
-m_settings.sendVoltage = false;
-}
-
+      m_settings.sendVoltage = root.get<int>(VOLTAGE);
+return;
 }
 
 if(root.containsKey(CONNECT)){
-m_settings.isConnected = true;
-m_settings.connectionCount = 0;
+m_settings.isConnected = 1;
+m_settings.count = 0;
 }
 
 }
@@ -144,15 +138,15 @@ void BimoControl::stopMove(){
 }
 
 void BimoControl::alarm(){
-    tone(m_tonePin, random(10, 800), 100);
+    tone(m_tonePin, random(10, 900), 120);
 }
 
 void BimoControl::ledON() {
   analogWrite(m_ledPin, m_settings.lightPWM);
 }
 
-bool BimoControl::isMoving(){
- return ((m_m1.isWorkingRightNow()) || (m_m2.isWorkingRightNow())) ? true : false;
+int BimoControl::isMoving(){
+ return ((m_m1.isWorkingRightNow()) or (m_m2.isWorkingRightNow())) ? 1 : 0;
 }
 
 void BimoControl::tryComeBack() {

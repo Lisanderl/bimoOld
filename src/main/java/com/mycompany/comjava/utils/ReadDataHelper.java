@@ -10,6 +10,7 @@ public class ReadDataHelper {
    private static double ADC5V0 = 5.0/ACCURACY;
    private static double ADC3V3 = 3.3/ACCURACY;
    private static double ADC1V1 = 1.1/ACCURACY;
+   private static double EXPERIMENTAL_VALUE = 0.029348;
 
     public static String bytesToString(byte[] bytes){
         return new String(bytes, Charset.defaultCharset());
@@ -25,6 +26,6 @@ public class ReadDataHelper {
     }
 
     public static double getVoltage(int value) {
-        return ADC5V0*value;
+        return EXPERIMENTAL_VALUE*value;
     }
 }
