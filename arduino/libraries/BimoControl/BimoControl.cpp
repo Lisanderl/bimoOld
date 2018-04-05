@@ -34,23 +34,24 @@ if(root.containsKey(ECHO)){
     }else {
        m_settings.echoActive = root.get<int>(ECHO);
     }
-return;
+	return;
 }
 
 if(root.containsKey(LIGHT)){
        m_settings.lightPWM = root.get<int>(LIGHT);
        ledON();
-return;
+	   return;
 }
 
 if(root.containsKey(VOLTAGE)){
       m_settings.sendVoltage = root.get<int>(VOLTAGE);
-return;
+	  return;
 }
 
 if(root.containsKey(CONNECT)){
-m_settings.isConnected = 1;
-m_settings.count = 0;
+	m_settings.isConnected = 1;
+	m_settings.count = 0;
+	return;
 }
 
 }
