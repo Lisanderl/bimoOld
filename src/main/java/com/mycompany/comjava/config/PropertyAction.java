@@ -26,6 +26,10 @@ public enum PropertyAction {
     public static String jsonValue(PropertyAction action, int val){
 
         return "{\"" + action.getShortName() + "\":" + val + "}";
+    }
 
+    public static String jsonValue(PropertyAction action, boolean val){
+
+        return "{\"" + action.getShortName() + "\":" + val + "}";
     }
 }

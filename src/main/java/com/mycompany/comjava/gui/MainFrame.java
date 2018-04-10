@@ -27,10 +27,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class MainFrame extends JFrame {
 
-    private JLabel configL, speedL, bitsL, stopBitsL, connection;
+    private JLabel configL, speedL, bitsL, stopBitsL, connection, powerLabel;
     private JPanel mainPanel, topPanel, bottomPanel, leftPanel, rightPanel, bottomLeft;
     private JButton  test, refresh, clearLog, verify;
-    private JCheckBox led, adc, pwm, echo;
+    private JCheckBox led, power, pwm, echo;
     private JTextArea log;
     private JScrollPane scroll;
     private JComboBox<String> COMPort;
@@ -56,6 +56,7 @@ public class MainFrame extends JFrame {
         bitsL = new JLabel("bits");
         stopBitsL = new JLabel("stop");
         connection = new JLabel("No connection");
+        powerLabel = new JLabel("Power: ");
         //panels
         mainPanel = new JPanel(new BorderLayout());
         topPanel = new JPanel(new FlowLayout());
@@ -81,7 +82,7 @@ public class MainFrame extends JFrame {
                              " \n if You wish control with keyboard ");
         log.setDisabledTextColor(Color.BLACK);
         scroll = new JScrollPane(log);
-        adc = new JCheckBox("ADC");
+        power = new JCheckBox("ADC");
         led = new JCheckBox("Led");
         pwm = new JCheckBox("Pwm");
         echo = new JCheckBox("<~~");
@@ -152,13 +153,12 @@ public class MainFrame extends JFrame {
         c.gridy = 1;
         rightPanel.add(batteryVoltage, c);
         c.gridx = 5;
-        rightPanel.add(adc, c);
+        rightPanel.add(powerLabel, c);
         c.gridy = 2;
         rightPanel.add(echo, c);
         c.gridx = 6;
         rightPanel.add(echoRange, c);
         batteryVoltage.setEditable(false);
-        // rightPanel.add(adc, c);
         c.gridx = 6;
         c.gridy = 3;
         rightPanel.add(pwm, c);

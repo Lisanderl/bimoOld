@@ -30,9 +30,6 @@ public class SerialPortController {
 
     private int portSpeed, bits, stopBits, parity;
 
-    private Timer timer;
-    private final int delay = 7500;
-
     @Autowired
     public SerialPortController(MainFrame mainFrame) {
 
@@ -70,8 +67,8 @@ public class SerialPortController {
         }
     }
 
-
     public void putPortNameToBox() {
+
         mainFrame.getCOMPort().removeAllItems();
         Optional<String[]> portNamesOptional = Optional.of(SerialPortList.getPortNames());
         if (portNamesOptional.isPresent()){
@@ -132,9 +129,9 @@ public class SerialPortController {
 
 //</editor-fold>
 
-    
     private class MySerialEventListener implements SerialPortEventListener {
-     
+        private Timer timer;
+        private final int delay = 7500;
         @Override
         public void serialEvent(SerialPortEvent event) {
             if(event.isRXCHAR()) {
@@ -145,12 +142,12 @@ public class SerialPortController {
                     if(key.isEmpty()){logger.ERROR("Read empty str ");
                     }else {
                         switch (key){
-                            case "C" : write(PropertyAction.jsonValue(PropertyAction.CONNECT, 1));
-                            mainFrame.getConnection().setText("Connected");
-                            timer = new Timer();
-                            timer.schedule(new ConnectionTask(), delay);
-                            break;
-                            case "V" : mainFrame.getBatteryVoltage().setText(String.valueOf(getVoltage(getIntFromStr(data))));
+                            case "V" :
+                                mainFrame.getBatteryVoltage().setText(String.valueOf(getVoltage(getIntFromStr(data))));
+                                write(PropertyAction.jsonValue(PropertyAction.CONNECT, true));
+                                mainFrame.getConnection().setText("Connected");
+                                timer = new Timer();
+                                timer.schedule(new ConnectionTask(), delay);
                             break;
                         }
                     }

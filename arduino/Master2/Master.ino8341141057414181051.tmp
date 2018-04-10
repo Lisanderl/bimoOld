@@ -8,7 +8,7 @@
 
 
 RF24 radio(A0,A1);
-AdcScanner adc(INTERNAL);
+AdcScanner power(INTERNAL);
 char data;
 float i2;
 int i;

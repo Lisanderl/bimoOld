@@ -8,6 +8,7 @@ package com.mycompany.comjava.controller;
 import com.mycompany.comjava.config.KeyBoardAction;
 import com.mycompany.comjava.config.PropertyAction;
 import com.mycompany.comjava.gui.MainFrame;
+import com.mycompany.comjava.utils.Delay;
 import com.mycompany.comjava.utils.TextComponentLogger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -91,6 +92,7 @@ public class GuiController {
                 getValueFromSliderAndWriteItToSerial(PropertyAction.LIGHT, mainFrame.getLightSlider());
                 mainFrame.getLightSlider().setEnabled(true);
             }
+
             if(e.getStateChange() == ItemEvent.DESELECTED){
                 mainFrame.getLightSlider().setEnabled(false);
                 serialPortController.write(PropertyAction.jsonValue(PropertyAction.LIGHT, 0));
@@ -102,6 +104,7 @@ public class GuiController {
                 getValueFromSliderAndWriteItToSerial(PropertyAction.SPEED, mainFrame.getSpeedSlider());
                 mainFrame.getSpeedSlider().setEnabled(true);
             }
+
             if(e.getStateChange() == ItemEvent.DESELECTED){
                 mainFrame.getSpeedSlider().setEnabled(false);
             }
@@ -109,21 +112,13 @@ public class GuiController {
 
         mainFrame.getEcho().addItemListener((ItemEvent e) -> {
             if(e.getStateChange() == ItemEvent.SELECTED){
+                serialPortController.write(PropertyAction.jsonValue(PropertyAction.ECHO, true));
+                Delay.ms(10);
                 serialPortController.write(PropertyAction.jsonValue(PropertyAction.ECHO, (int)mainFrame.getEchoRange().getSelectedItem()));
+            }
 
-            }
             if(e.getStateChange() == ItemEvent.DESELECTED){
-                serialPortController.write(PropertyAction.jsonValue(PropertyAction.ECHO, 0));
-            }
-        });
-
-        mainFrame.getAdc().addItemListener((ItemEvent e) -> {
-            if(e.getStateChange() == ItemEvent.SELECTED){
-                serialPortController.write(PropertyAction.jsonValue(PropertyAction.VOLTAGE, 1));
-            }
-            if(e.getStateChange() == ItemEvent.DESELECTED){
-                serialPortController.write(PropertyAction.jsonValue(PropertyAction.VOLTAGE, 0));
-                mainFrame.getBatteryVoltage().setText("");
+                serialPortController.write(PropertyAction.jsonValue(PropertyAction.ECHO, false));
             }
         });
 
