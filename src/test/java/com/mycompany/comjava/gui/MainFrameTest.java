@@ -31,7 +31,6 @@ public class MainFrameTest {
         assertThat(lal.startsWith("i", 1)).isTrue();
         assertThat(lal2.replaceFirst("AD1C", "")).isEqualTo("12");
 
-
     }
 
 }

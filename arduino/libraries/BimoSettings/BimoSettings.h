@@ -8,13 +8,12 @@ BimoSettings();
 int leftMotorPWM = 100;
 int rightMotorPWM = 100;
 int lightPWM = 0;
-int echoDistance = 10;
-int isConnected = 0;
-int sendVoltage = 0;
-int echoActive = 0;
+int echoDistance = 5;
+bool isConnected = true;
+bool sendVoltage = false;
+bool echoActive = false;
 long count = 0;
 private:
-
 };
 
 #endif

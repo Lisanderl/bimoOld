@@ -6,15 +6,15 @@
 #include <ArduinoJson.h>
 using namespace std;
 
-BimoControl::BimoControl(Motor m1, Motor m2, Ultrasonic ultrasonic, BimoSettings settings, int ledPin, int tonePin)
- :m_m1(m1), m_m2(m2), m_ultrasonic(ultrasonic), m_settings(settings), m_ledPin(ledPin), m_tonePin(tonePin)
+BimoControl::BimoControl(Motor m1, Motor m2, Ultrasonic ultrasonic, int ledPin, int tonePin)
+ :m_m1(m1), m_m2(m2), m_ultrasonic(ultrasonic), m_ledPin(ledPin), m_tonePin(tonePin)
 {
 	//int m1pwm, int m11, int m12, int m2pwm, int m21, int m22
 //MashineControl(10, 4, 3, 9, 7, 8);
 
 }
 
-void BimoControl::findAndGetDataFromArray(char* data){
+void BimoControl::findAndGetDataFromArray(char data[]){
 StaticJsonBuffer<16> jsonBuffer;
 JsonObject& root = jsonBuffer.parseObject(data);
 if(root.containsKey(ACTION)){
@@ -28,36 +28,37 @@ m_settings.rightMotorPWM = root.get<int>(SPEED);
 return;
 }
 
-if(root.containsKey(ECHO)){
-    if(root.get<int>(ECHO) > 1){
-       m_settings.echoDistance = root.get<int>(ECHO);
-    }else {
-       m_settings.echoActive = root.get<int>(ECHO);
-    }
-	return;
-}
-
 if(root.containsKey(LIGHT)){
        m_settings.lightPWM = root.get<int>(LIGHT);
        ledON();
-	   return;
+return;
 }
 
 if(root.containsKey(VOLTAGE)){
-      m_settings.sendVoltage = root.get<int>(VOLTAGE);
-	  return;
+      m_settings.sendVoltage = root.get<bool>(VOLTAGE);
+return;
+}
+
+if(root.containsKey(ECHO)){
+   if(root.is<bool>(ECHO)){
+   m_settings.echoActive = root.get<bool>(ECHO);
+  }
+   if(root.is<int>(ECHO)){
+   m_settings.echoDistance = root.get<int>(ECHO);
+  }
+return;
 }
 
 if(root.containsKey(CONNECT)){
-	m_settings.isConnected = 1;
-	m_settings.count = 0;
-	return;
+m_settings.isConnected = root.get<bool>(CONNECT);
+m_settings.count = 0;
 }
-
+ return;
 }
 
 void BimoControl::doAction(int val){
 
+    m_settings.isConnected = true;
   switch (val) {
     case 1:   goStraight();
       break;
@@ -71,15 +72,10 @@ void BimoControl::doAction(int val){
       break;
     case 8:   goRightEasy();
       break;
-    case 6:  //set back slowly right
-      break;
-    case 9:  //set back slowly left
-      break;
     case 20:   alarm();
       break;
     default :  stopMove();
   }
-
 }
 
 void BimoControl::setMotorPWM(){

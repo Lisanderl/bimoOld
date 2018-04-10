@@ -7,7 +7,7 @@
 class BimoControl {
 	
 public:
-BimoControl(Motor m1, Motor m2, Ultrasonic ultrasonic, BimoSettings settings, int ledPin, int tonePin);
+BimoControl(Motor m1, Motor m2, Ultrasonic ultrasonic, int ledPin, int tonePin);
 
 String LIGHT = "L";
 String SPEED = "S";
@@ -15,8 +15,10 @@ String ECHO = "E";
 String VOLTAGE = "V";
 String ACTION = "A";
 String CONNECT = "C";
+Ultrasonic m_ultrasonic;
+BimoSettings m_settings;
 
-void findAndGetDataFromArray(char* data);
+void findAndGetDataFromArray(char data[]);
 void setMotorPWM();
 void goStraight();
 void goBack();
@@ -36,8 +38,6 @@ private:
 void doAction(int val);
 Motor m_m1;
 Motor m_m2;
-Ultrasonic m_ultrasonic;
-BimoSettings m_settings;
 int m_ledPin;
 int m_tonePin;
 //values vor sos

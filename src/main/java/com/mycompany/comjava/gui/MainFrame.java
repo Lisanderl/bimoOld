@@ -41,7 +41,7 @@ public class MainFrame extends JFrame {
     public MainFrame() throws HeadlessException {
         init();
         super.setTitle("Bimo user interface");
-        super.setMinimumSize(new Dimension(580, 420));
+        super.setMinimumSize(new Dimension(600, 500));
         super.setDefaultCloseOperation(EXIT_ON_CLOSE);
         addComponents();
         log.setEnabled(false);
