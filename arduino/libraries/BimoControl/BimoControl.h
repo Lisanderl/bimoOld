@@ -29,10 +29,11 @@ void stopMove();
 void goRightEasy();
 void goLeftEasy();
 void ledON();
-void tryComeBack();
 void alarm();
 int measureEchoValue();
-int isMoving();
+void tryComeBack();
+bool isMoving();
+void checkMovePermission();
 private:
 
 void doAction(int val);

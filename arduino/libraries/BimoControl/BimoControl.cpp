@@ -28,17 +28,6 @@ m_settings.rightMotorPWM = root.get<int>(SPEED);
 return;
 }
 
-if(root.containsKey(LIGHT)){
-       m_settings.lightPWM = root.get<int>(LIGHT);
-       ledON();
-return;
-}
-
-if(root.containsKey(VOLTAGE)){
-      m_settings.sendVoltage = root.get<bool>(VOLTAGE);
-return;
-}
-
 if(root.containsKey(ECHO)){
    if(root.is<bool>(ECHO)){
    m_settings.echoActive = root.get<bool>(ECHO);
@@ -49,16 +38,21 @@ if(root.containsKey(ECHO)){
 return;
 }
 
-if(root.containsKey(CONNECT)){
-m_settings.isConnected = root.get<bool>(CONNECT);
-m_settings.count = 0;
+if(root.containsKey(VOLTAGE)){
+      m_settings.sendVoltage = root.get<bool>(VOLTAGE);
+return;
 }
- return;
+
+if(root.containsKey(LIGHT)){
+       m_settings.lightPWM = root.get<int>(LIGHT);
+       ledON();
+return;
+}
+m_settings.isConnected = true;
 }
 
 void BimoControl::doAction(int val){
 
-    m_settings.isConnected = true;
   switch (val) {
     case 1:   goStraight();
       break;
@@ -142,23 +136,37 @@ void BimoControl::ledON() {
   analogWrite(m_ledPin, m_settings.lightPWM);
 }
 
-int BimoControl::isMoving(){
+int BimoControl::measureEchoValue() {
+  return (int)m_ultrasonic.Ranging(CM);
+}
+
+bool BimoControl::isMoving(){
  return ((m_m1.isWorkingRightNow()) or (m_m2.isWorkingRightNow())) ? 1 : 0;
+}
+
+void BimoControl::checkMovePermission() {
+  
+  if(!m_settings.isConnected || 
+  (m_settings.echoActive && (measureEchoValue() < m_settings.echoDistance))
+  ){
+    stopMove();
+    delay(10);
+  }
 }
 
 void BimoControl::tryComeBack() {
  int pmw1 = m_settings.leftMotorPWM;
  int pmw2 = m_settings.rightMotorPWM;
 
- m_settings.leftMotorPWM = 70;
- m_settings.rightMotorPWM = 70;
+ m_settings.leftMotorPWM = 110;
+ m_settings.rightMotorPWM = 110;
 
  goLeft();
  delay(1100);
  stopMove();
  for(int i = 4; i != 0; i--){
  if(measureEchoValue() >= 8){
-    BimoControl::goStraight();
+    goStraight();
      delay(800);
      stopMove();
      delay(200);
@@ -168,7 +176,4 @@ void BimoControl::tryComeBack() {
  m_settings.rightMotorPWM = pmw2;
 }
 
-int BimoControl::measureEchoValue() {
-  return (int)m_ultrasonic.Ranging(CM);
-}
 
