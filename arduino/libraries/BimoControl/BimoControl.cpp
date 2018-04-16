@@ -10,7 +10,7 @@ BimoControl::BimoControl(Motor m1, Motor m2, Ultrasonic ultrasonic, int ledPin, 
  :m_m1(m1), m_m2(m2), m_ultrasonic(ultrasonic), m_ledPin(ledPin), m_tonePin(tonePin)
 {
 	//int m1pwm, int m11, int m12, int m2pwm, int m21, int m22
-//MashineControl(10, 4, 3, 9, 7, 8);
+//BimoControl(10, 4, 3, 9, 7, 8);
 
 }
 
@@ -35,11 +35,6 @@ if(root.containsKey(ECHO)){
    if(root.is<int>(ECHO)){
    m_settings.echoDistance = root.get<int>(ECHO);
   }
-return;
-}
-
-if(root.containsKey(VOLTAGE)){
-      m_settings.sendVoltage = root.get<bool>(VOLTAGE);
 return;
 }
 
@@ -72,29 +67,29 @@ void BimoControl::doAction(int val){
   }
 }
 
-void BimoControl::setMotorPWM(){
+void BimoControl::setMotorPWM(float divider){
 
-	m_m1.setPWM(m_settings.leftMotorPWM);
-	m_m2.setPWM(m_settings.rightMotorPWM);
+	m_m1.setPWM((int)m_settings.leftMotorPWM*divider);
+	m_m2.setPWM((int)m_settings.rightMotorPWM*divider);
 }
 
 void BimoControl::goStraight(){
 
-    setMotorPWM();
+    setMotorPWM(1.0);
 	m_m1.on();
 	m_m2.on();
 }
 
 void BimoControl::goBack(){
 
-    setMotorPWM();
+    setMotorPWM(0.8);
 	m_m1.reverse();
 	m_m2.reverse();
 }
 
 void BimoControl::goRight(){
 
-    setMotorPWM();
+    setMotorPWM(1.35);
 	m_m2.reverse();
 	m_m1.on();
 }
@@ -108,7 +103,7 @@ void BimoControl::goRightEasy(){
 
 void BimoControl::goLeft(){
 
-    setMotorPWM();
+    setMotorPWM(1.35);
 	m_m2.on();
 	m_m1.reverse();
 }

@@ -9,17 +9,17 @@ class BimoControl {
 public:
 BimoControl(Motor m1, Motor m2, Ultrasonic ultrasonic, int ledPin, int tonePin);
 
-String LIGHT = "L";
-String SPEED = "S";
-String ECHO = "E";
-String VOLTAGE = "V";
-String ACTION = "A";
-String CONNECT = "C";
+String const LIGHT = "L";
+String const SPEED = "S";
+String const ECHO = "E";
+String const VOLTAGE = "V";
+String const ACTION = "A";
+String const CONNECT = "C";
 Ultrasonic m_ultrasonic;
 BimoSettings m_settings;
 
 void findAndGetDataFromArray(char data[]);
-void setMotorPWM();
+void setMotorPWM(float divider);
 void goStraight();
 void goBack();
 void goRight();

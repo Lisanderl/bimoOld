@@ -90,7 +90,7 @@ public class MainFrame extends JFrame {
         batteryVoltage = new JTextField(7);
 
         //Sliders // magic numbers hello
-        speedSlider = new JSlider( JSlider.VERTICAL, 100, 200, 100);
+        speedSlider = new JSlider( JSlider.VERTICAL, 50, 160, 50);
         lightSlider = new JSlider( JSlider.VERTICAL, 0, 250, 0);
         //config it
         speedSlider.setPaintLabels(true);
