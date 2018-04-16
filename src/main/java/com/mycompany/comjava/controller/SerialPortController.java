@@ -131,14 +131,16 @@ public class SerialPortController {
 
     private class MySerialEventListener implements SerialPortEventListener {
         private Timer timer;
-        private final int delay = 7500;
+        private final int delay = 12500;
         @Override
         public void serialEvent(SerialPortEvent event) {
             if(event.isRXCHAR()) {
                 int bufferSize = event.getEventValue();
                 try {
                     String data = bytesToString(mainPort.readBytes(bufferSize));
+                    System.out.println(data);
                     String key = PropertyAction.isStrContainsShortValue(data);
+                    System.out.println(key);
                     if(key.isEmpty()){logger.ERROR("Read empty str ");
                     }else {
                         switch (key){
