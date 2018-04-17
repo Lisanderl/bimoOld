@@ -78,6 +78,7 @@ void BimoControl::goStraight(){
     setMotorPWM(1.0);
 	m_m1.on();
 	m_m2.on();
+	startEchoDefense(true);
 }
 
 void BimoControl::goBack(){
@@ -85,6 +86,7 @@ void BimoControl::goBack(){
     setMotorPWM(0.8);
 	m_m1.reverse();
 	m_m2.reverse();
+	startEchoDefense(false);
 }
 
 void BimoControl::goRight(){
@@ -92,13 +94,15 @@ void BimoControl::goRight(){
     setMotorPWM(1.35);
 	m_m2.reverse();
 	m_m1.on();
+	startEchoDefense(false);
 }
 
 void BimoControl::goRightEasy(){
 
-    m_m2.setPWM(m_settings.rightMotorPWM/5);
+    m_m2.setPWM(m_settings.rightMotorPWM/7);
 	m_m1.on();
     m_m2.on();
+    startEchoDefense(true);
 }
 
 void BimoControl::goLeft(){
@@ -106,13 +110,15 @@ void BimoControl::goLeft(){
     setMotorPWM(1.35);
 	m_m2.on();
 	m_m1.reverse();
+	startEchoDefense(false);
 }
 
 void BimoControl::goLeftEasy(){
 
-    m_m1.setPWM(m_settings.leftMotorPWM/5);
+    m_m1.setPWM(m_settings.leftMotorPWM/7);
 	m_m1.on();
     m_m2.on();
+    startEchoDefense(true);
 }
 
 void BimoControl::stopMove(){
@@ -121,6 +127,7 @@ void BimoControl::stopMove(){
 	m_m2.off();
 	m_m1.setPWM(0);
     m_m2.setPWM(0);
+    startEchoDefense(false);
 }
 
 void BimoControl::alarm(){
@@ -136,20 +143,24 @@ int BimoControl::measureEchoValue() {
 }
 
 bool BimoControl::isMoving(){
- return ((m_m1.isWorkingRightNow()) or (m_m2.isWorkingRightNow())) ? 1 : 0;
+ return ((m_m1.isWorkingRightNow()) or (m_m2.isWorkingRightNow())) ? true : false;
+}
+
+void BimoControl::startEchoDefense(bool val){
+ m_settings.echoStart = val;
 }
 
 void BimoControl::checkMovePermission() {
   
-  if(!m_settings.isConnected || 
-  (m_settings.echoActive && (measureEchoValue() < m_settings.echoDistance))
-  ){
+  if((!m_settings.isConnected) || (m_settings.echoActive && (measureEchoValue() <= m_settings.echoDistance))){
     stopMove();
     delay(10);
   }
 }
 
 void BimoControl::tryComeBack() {
+if(!m_settings.isConnected){
+ stopMove();
  int pmw1 = m_settings.leftMotorPWM;
  int pmw2 = m_settings.rightMotorPWM;
 
@@ -157,7 +168,7 @@ void BimoControl::tryComeBack() {
  m_settings.rightMotorPWM = 110;
 
  goLeft();
- delay(1100);
+ delay(500);
  stopMove();
  for(int i = 4; i != 0; i--){
  if(measureEchoValue() >= 8){
@@ -169,6 +180,7 @@ void BimoControl::tryComeBack() {
   }
  m_settings.leftMotorPWM = pmw1;
  m_settings.rightMotorPWM = pmw2;
+ }
 }
 
 

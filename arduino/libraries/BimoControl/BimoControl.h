@@ -34,8 +34,10 @@ int measureEchoValue();
 void tryComeBack();
 bool isMoving();
 void checkMovePermission();
+
 private:
 
+void startEchoDefense(bool val);
 void doAction(int val);
 Motor m_m1;
 Motor m_m2;

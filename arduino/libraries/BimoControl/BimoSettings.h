@@ -5,13 +5,21 @@ class BimoSettings {
 public:
 BimoSettings();
 
+int const echoConst = 5000;
+int const connectionConst = 75000;
+
 int leftMotorPWM = 50;
 int rightMotorPWM = 50;
 int lightPWM = 0;
-int echoDistance = 10;
-bool isConnected = true;
+
+
 bool echoActive = false;
-long count = 0;
+bool echoStart = false;
+int echoDistance = 10;
+long echoCount = 0;
+
+bool isConnected = true;
+long connectionCount = 0;
 private:
 };
 
