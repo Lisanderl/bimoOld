@@ -131,7 +131,7 @@ public class SerialPortController {
 
     private class MySerialEventListener implements SerialPortEventListener {
         private Timer timer;
-        private final int delay = 12500;
+        private final int delay = 16500;
         @Override
         public void serialEvent(SerialPortEvent event) {
             if(event.isRXCHAR()) {
