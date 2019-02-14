@@ -43,6 +43,20 @@ public class KeyBoardActionTest {
         KeyBoardAction.GO_STRAIGHT.setActive(true);
         KeyBoardAction.GO_BACK.setActive(false);
         assertThat(KeyBoardAction.getSumOfActiveActions()).isEqualTo(KeyBoardAction.GO_STRAIGHT.getActionCode());
+        int j = 0;
+        for (int i = 0; i < 4; i++ ){
+            int x = i+j+1;
+            int y = i+j;
+            System.out.println("One = " + y + " Two = " + x);
+            j++;
+        }
+            int xx = j+4;
+        for (int i = j; i < xx; i++ ){
+            int x = i+j+1;
+            int y = i+j;
+            System.out.println("One = " + y + " Two = " + x);
+            j++;
+        }
     }
 
     @Test
